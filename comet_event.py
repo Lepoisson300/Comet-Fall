@@ -1,4 +1,6 @@
 import pygame
+from threading import Timer
+
 from comet import Comet
 #creer une classe qui va gerer cet evenement
 class CometFalllEvent:
@@ -6,7 +8,8 @@ class CometFalllEvent:
     #lors du chargement -- creer un compteur
     def __init__(self):
         self.percent = 0
-        self.percent_speed = 5
+        self.percent_speed = 0.5
+        self.comet_time = 2
 
         # definir un groupe de comete
         self.all_comet = pygame.sprite.Group()
@@ -21,6 +24,9 @@ class CometFalllEvent:
         # apparaitre boule de feu
         self.all_comet.add(Comet())
 
+    def reinit_comet(self):
+        self.all_comet = pygame.sprite.Group()
+
     def attempt_fall(self):
         #la jauge d'eevenement est totallement chargé
         if self.is_full_loaded():
@@ -34,6 +40,8 @@ class CometFalllEvent:
         # appel de la methode pour declencher la pluie
         if self.is_full_loaded():
             self.meteor_fall()
+            self.attempt_fall()
+            Timer(self.comet_time, self.reinit_comet).start()
 
         # barre noir (en arriere plan)
         pygame.draw.rect(surface, (0, 0, 0), [

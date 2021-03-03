@@ -14,7 +14,7 @@ class Monster(pygame.sprite.Sprite):
         self.rect = self.image.get_rect()
         self.rect.x = 1000 + random.randint(0, 300)
         self.rect.y = 540
-        self.velocity = random.randint(1, 3)
+        self.velocity = random.randint(1, 2)
 
     def damage(self, amount):
         #infliger les degats
