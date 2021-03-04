@@ -1,4 +1,5 @@
 import pygame
+import random
 
 # définir une classe qui va gerer les animations
 class AnimateSprite(pygame.sprite.Sprite):
@@ -7,7 +8,22 @@ class AnimateSprite(pygame.sprite.Sprite):
     def __init__(self, sprite_name):
         super().__init__()
         self.image = pygame.image.load(f'assets/{sprite_name}.png')
+        self.current_image = 0 # commener l'anim a l'image 0
+        self.images = animation.get(sprite_name)
 
+    # definir une methode pour animer le sprite
+    def animate(self):
+
+        # passer a l'image suivante
+        self.current_image += random.randint(0, 1)
+
+        # verifier si on a atteint la fin de l'animation
+        if self.current_image >= len(self.images):
+            # remettre l'animation de départ
+            self.current_image = 0
+
+        # modifier l'image précedente par la suivante
+        self.image = self.images[self.current_image]
 
 # definir une fonction pour charger les images d'un sprite
 def load_animation_images(sprite_name):
@@ -18,9 +34,15 @@ def load_animation_images(sprite_name):
 
     # boucler sur chaque images dans ce dossier
     for num in range(1, 24):
-        image_path = path + num + 'png'
-        pygame.image.load(image_path)
-        image.append(pygame.image.load(image_path))
+        image_path = path + str(num) + '.png'
+        images.append(pygame.image.load(image_path))
 
     # renvoyer le contenu des images
     return images
+
+# definir un dictionnaire qui va contenir les images chargées de chaque sprite
+#mummy -- [...mummy1.png, ...mummy2.png, ...]
+animation = {
+    'mummy': load_animation_images('mummy'),
+    'player': load_animation_images('player')
+}

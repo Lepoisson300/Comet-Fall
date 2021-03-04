@@ -6,7 +6,7 @@ import animation
 class Monster(animation.AnimateSprite):
 
     def __init__(self, game):
-        super().__init__("mummy")
+        super().__init__('mummy')
         self.game = game
         self.health = 100
         self.max_health = 100
@@ -33,6 +33,9 @@ class Monster(animation.AnimateSprite):
                 self.game.all_monster.remove(self)
 
                 self.game.comet_event.attempt_fall()
+
+    def update_animation(self):
+        self.animate()
 
     def update_health_bar(self, surface):
         # dessiner notre barre de vie
