@@ -3,13 +3,15 @@ from threading import Timer
 
 from comet import Comet
 #creer une classe qui va gerer cet evenement
-class CometFalllEvent:
+class CometFallEvent:
 
     #lors du chargement -- creer un compteur
-    def __init__(self):
+    def __init__(self, game):
         self.percent = 0
         self.percent_speed = 0.5
-        self.comet_time = 2
+        self.game = game
+        self.fall_mode = False
+
 
         # definir un groupe de comete
         self.all_comet = pygame.sprite.Group()
@@ -17,31 +19,33 @@ class CometFalllEvent:
     def add_percent(self):
         self.percent += self.percent_speed / 5
 
+    def reset_percent(self):
+        self.percent = 0
+
     def is_full_loaded(self):
         return self.percent >= 100
 
     def meteor_fall(self):
+        # boucle pour le nb de comet
+        for i in range(1, 10):
         # apparaitre boule de feu
-        self.all_comet.add(Comet())
+            self.all_comet.add(Comet(self))
 
     def reinit_comet(self):
         self.all_comet = pygame.sprite.Group()
 
     def attempt_fall(self):
         #la jauge d'eevenement est totallement chargé
-        if self.is_full_loaded():
-            self.percent = 0
+        if self.is_full_loaded() and len(self.game.all_monster) == 0:
+            self.meteor_fall()
+            self.reset_percent()
+            self.fall_mode = True
 
     def update_bar(self, surface):
 
         #ajouter du pourcentage a la barre
         self.add_percent()
 
-        # appel de la methode pour declencher la pluie
-        if self.is_full_loaded():
-            self.meteor_fall()
-            self.attempt_fall()
-            Timer(self.comet_time, self.reinit_comet).start()
 
         # barre noir (en arriere plan)
         pygame.draw.rect(surface, (0, 0, 0), [

@@ -24,8 +24,14 @@ class Monster(pygame.sprite.Sprite):
         if self.health <= 0:
             # réaparaitre
             self.rect.x = 1000 + random.randint(0, 300)
-            self.velocity = random.randint(1, 3)
+            self.velocity = random.randint(1, 2)
             self.health = self.max_health
+
+            # si la barre d'evenement est chargé a son maximum
+            if self.game.comet_event.is_full_loaded():
+                self.game.all_monster.remove(self)
+
+                self.game.comet_event.attempt_fall()
 
     def update_health_bar(self, surface):
         # dessiner notre barre de vie

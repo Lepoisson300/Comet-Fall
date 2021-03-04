@@ -1,5 +1,5 @@
 import pygame
-from comet_event import CometFalllEvent
+from comet_event import CometFallEvent
 from player import Player
 from monster import Monster
 
@@ -15,7 +15,7 @@ class Game:
         self.player = Player(self)
         self.all_players.add(self.player)
         #generer l'evenement
-        self.comet_event = CometFalllEvent()
+        self.comet_event = CometFallEvent(self)
         #definir un groupe de monstre
         self.all_monster = pygame.sprite.Group()
         self.pressed = {}
@@ -35,7 +35,9 @@ class Game:
     def game_over(self):
         # remettre le jeu a neuf
         self.all_monster = pygame.sprite.Group()
+        self.comet_event.all_comet = pygame.sprite.Group()
         self.player.health = self.player.max_health
+        self.comet_event.reset_percent()
         self.is_playing = False
 
     def update(self, screen):
@@ -56,6 +58,10 @@ class Game:
         for monster in self.all_monster:
             monster.forward()
             monster.update_health_bar(screen)
+
+        # recuperer les comete de notre jeu
+        for comet in self.comet_event.all_comet:
+            comet.fall()
 
         # appliquer l'ensemble des iùmage de mon groupe de projectile
         self.player.all_projectiles.draw(screen)
