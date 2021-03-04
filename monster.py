@@ -16,6 +16,7 @@ class Monster(animation.AnimateSprite):
         self.rect.x = 1000 + random.randint(0, 300)
         self.rect.y = 540
         self.velocity = random.randint(1, 2)
+        self.start_animation()
 
     def damage(self, amount):
         #infliger les degats
@@ -35,7 +36,7 @@ class Monster(animation.AnimateSprite):
                 self.game.comet_event.attempt_fall()
 
     def update_animation(self):
-        self.animate()
+        self.animate(loop=True)
 
     def update_health_bar(self, surface):
         # dessiner notre barre de vie
