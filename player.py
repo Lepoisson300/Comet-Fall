@@ -34,6 +34,7 @@ class Player(animation.AnimateSprite):
         self.all_projectiles.add(Projectile(self))
 
         self.start_animation()
+        self.game.sound_manager.play('tir')
 
     def update_health_bar(self, surface):
         # dessiner notre barre de vie

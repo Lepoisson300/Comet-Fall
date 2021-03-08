@@ -17,6 +17,7 @@ class Comet(pygame.sprite.Sprite):
 
     def remove(self):
         self.comet_event.all_comet.remove(self)
+        self.comet_event.game.sound_manager.play('meteorite')
 
         # verifier si le nb de comete est 0
         if len(self.comet_event.all_comet) == 0:
