@@ -5,7 +5,7 @@ import animation
 # creer une classe qui va gerer la notion de monstre sur notre jeu
 class Monster(animation.AnimateSprite):
 
-    def __init__(self, game, name, size):
+    def __init__(self, game, name, size, offset=0):
         super().__init__(name, size)
         self.game = game
         self.health = 100
@@ -14,9 +14,13 @@ class Monster(animation.AnimateSprite):
         self.image = pygame.image.load('assets/mummy.png')
         self.rect = self.image.get_rect()
         self.rect.x = 1000 + random.randint(0, 300)
-        self.rect.y = 540
-        self.velocity = random.randint(1, 2)
+        self.rect.y = 540 - offset
+
         self.start_animation()
+
+    def set_speed(self, speed):
+        self.default_speed = speed
+        self.velocity = random.randint(1, 3)
 
     def damage(self, amount):
         #infliger les degats
@@ -26,7 +30,7 @@ class Monster(animation.AnimateSprite):
         if self.health <= 0:
             # réaparaitre
             self.rect.x = 1000 + random.randint(0, 300)
-            self.velocity = random.randint(1, 2)
+            self.velocity = random.randint(1, self.default_speed)
             self.health = self.max_health
 
             # si la barre d'evenement est chargé a son maximum
@@ -57,10 +61,15 @@ class Mummy(Monster):
 
     def __init__(self, game):
         super().__init__(game, "mummy", (130, 130))
+        self.set_speed(3)
 
 
 # définir une classe pour l'alien
 class Alien(Monster):
 
     def __init__(self, game):
-        super().__init__(game, "alien", (300, 300))
+        super().__init__(game, "alien", (300, 300), 130)
+        self.health = 250
+        self.max_health = 250
+        self.attack = 0.8
+        self.set_speed(2)

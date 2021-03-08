@@ -8,7 +8,7 @@ class CometFallEvent:
     #lors du chargement -- creer un compteur
     def __init__(self, game):
         self.percent = 0
-        self.percent_speed = 0.05
+        self.percent_speed = 0.25
         self.game = game
         self.fall_mode = False
 
@@ -27,7 +27,7 @@ class CometFallEvent:
 
     def meteor_fall(self):
         # boucle pour le nb de comet
-        for i in range(1, 10):
+        for i in range(1, 20):
         # apparaitre boule de feu
             self.all_comet.add(Comet(self))
 

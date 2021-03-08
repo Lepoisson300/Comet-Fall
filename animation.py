@@ -9,7 +9,7 @@ class AnimateSprite(pygame.sprite.Sprite):
         super().__init__()
         self.size = size
         self.image = pygame.image.load(f'assets/{sprite_name}.png')
-
+        self.image = pygame.transform.scale(self.image, size)
         self.current_image = 0 # commener l'anim a l'image 0
         self.images = animation.get(sprite_name)
         self.animation = False
@@ -24,7 +24,7 @@ class AnimateSprite(pygame.sprite.Sprite):
         if self.animation:
 
             # passer a l'image suivante
-            self.current_image += random.randint(0, 1)
+            self.current_image += random.randint(0, 2)
 
             # verifier si on a atteint la fin de l'animation
             if self.current_image >= len(self.images):
