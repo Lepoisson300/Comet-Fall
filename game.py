@@ -18,6 +18,8 @@ class Game:
         self.comet_event = CometFallEvent(self)
         #definir un groupe de monstre
         self.all_monster = pygame.sprite.Group()
+        # mettre le score a 0
+        self.score = 0
         self.pressed = {}
 
     def start(self):
@@ -40,8 +42,14 @@ class Game:
         self.player.health = self.player.max_health
         self.comet_event.reset_percent()
         self.is_playing = False
+        self.score = 0
 
     def update(self, screen):
+        " afficher le score sur l'ecran"
+        font = pygame.font.SysFont("monospace", 16)
+        score_text = font.render(f"Score : {self.score}", 1, (0, 0, 0))
+        screen.blit(score_text, (20, 20))
+
         # apliquer l'image de mon joueur
         screen.blit(self.player.image, self.player.rect)
 
