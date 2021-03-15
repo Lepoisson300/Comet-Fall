@@ -1,6 +1,5 @@
 import pygame
 
-
 from comet_event import CometFallEvent
 from player import Player
 from monster import Monster, Mummy, Alien
@@ -25,13 +24,13 @@ class Game:
         self.font = pygame.font.Font("assets/Anton-Regular.ttf", 30)
         # mettre le score a 0
         self.score = 0
-        self.joueur = 'Rems24'
         self.pressed = {}
         self.background_change = 0
-        self.level = None
         self.menu_sound = pygame.mixer.Sound('assets/sounds/protect-2x.mp3')
 
     def start(self):
+        self.menu_sound.set_volume(0.2)
+        self.menu_sound.play()
         self.is_playing = True
         self.spawn_monster(Mummy)
         self.spawn_monster(Mummy)
@@ -55,17 +54,15 @@ class Game:
         self.comet_event.reset_percent()
         self.is_playing = False
         self.score = 0
-        self.background_change = 0
-        self.level = None
         self.menu_sound.stop()
         self.sound_manager.play('game_over')
 
     def update(self, screen):
         """ afficher le score sur l'ecran """
-        score_text = self.font.render(f"{self.joueur}, Score : {self.score}", 1, (0, 0, 0))
+        score_text = self.font.render(f"Score : {self.score}", 1, (0, 0, 0))
         screen.blit(score_text, (20, 20))
 
-        # appliquer l'image de mon joueur
+        # apliquer l'image de mon joueur
         screen.blit(self.player.image, self.player.rect)
 
         # actualiszer la bnarre de vie du joueur
