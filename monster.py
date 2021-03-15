@@ -2,7 +2,7 @@ import pygame
 import random
 import animation
 
-# creer une classe qui va gerer la notion de monstre sur notre jeu
+
 class Monster(animation.AnimateSprite):
 
     def __init__(self, game, name, size, offset=0):
@@ -16,17 +16,14 @@ class Monster(animation.AnimateSprite):
         self.rect.x = 1000 + random.randint(0, 300)
         self.rect.y = 540 - offset
         self.loot_amount = 10
-        self.start_animation()
-
-    def set_speed(self, speed):
-        self.default_speed = speed
         self.velocity = random.randint(1, 3)
+        self.start_animation()
 
     def set_loot_amount(self, amount):
         self.loot_amount = amount
 
     def damage(self, amount):
-        #infliger les degats
+        # infliger les degats
         self.health -= amount
 
         # verrifier si son nouveau nombre de point de vie  = 0
@@ -58,19 +55,18 @@ class Monster(animation.AnimateSprite):
             self.rect.x -= self.velocity
         # si il est en collisipon avec notre joueur
         else:
-            #infliger des dégats
+            # infliger des dégats
             self.game.player.damage(self.attack)
 
-# definir une classe pour la momie
+
 class Mummy(Monster):
 
     def __init__(self, game):
         super().__init__(game, "mummy", (130, 130))
-        self.set_speed(3)
+        self.default_speed = 3
         self.set_loot_amount(20)
 
 
-# définir une classe pour l'alien
 class Alien(Monster):
 
     def __init__(self, game):
@@ -78,5 +74,5 @@ class Alien(Monster):
         self.health = 250
         self.max_health = 250
         self.attack = 0.8
-        self.set_speed(2)
-        self.set_loot_amount(80  )
+        self.default_speed = 2
+        self.set_loot_amount(80)

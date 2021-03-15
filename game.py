@@ -1,23 +1,23 @@
 import pygame
+
 from comet_event import CometFallEvent
 from player import Player
 from monster import Monster, Mummy, Alien
 from sounds import SoundManager
 
 
-#creer une seconde classe qui va representer notre jeu
 class Game:
 
     def __init__(self):
-        #definir si notre jeu a commencé
+        # definir si notre jeu a commencé
         self.is_playing = False
-        #generer notre joueur
+        # generer notre joueur
         self.all_players = pygame.sprite.Group()
         self.player = Player(self)
         self.all_players.add(self.player)
-        #generer l'evenement
+        # generer l'evenement
         self.comet_event = CometFallEvent(self)
-        #definir un groupe de monstre
+        # definir un groupe de monstre
         self.all_monster = pygame.sprite.Group()
         # gerer le son
         self.sound_manager = SoundManager()
@@ -38,8 +38,8 @@ class Game:
     def spawn_monster(self, monster_class_name):
         self.all_monster.add(monster_class_name.__call__(self))
 
-
-    def check_colision(self, sprite, group):
+    @staticmethod
+    def check_colision(sprite, group):
         return pygame.sprite.spritecollide(sprite, group, False, pygame.sprite.collide_mask)
 
     def game_over(self):
@@ -53,7 +53,7 @@ class Game:
         self.sound_manager.play('game_over')
 
     def update(self, screen):
-        " afficher le score sur l'ecran"
+        """ afficher le score sur l'ecran """
         score_text = self.font.render(f"Score : {self.score}", 1, (0, 0, 0))
         screen.blit(score_text, (20, 20))
 
@@ -86,7 +86,7 @@ class Game:
         # appliquer l'ensemble des iùmage de mon groupe de projectile
         self.player.all_projectiles.draw(screen)
         
-        #appliquer l'ensemble des images de comet
+        # appliquer l'ensemble des images de comet
         self.comet_event.all_comet.draw(screen)
 
         # appliquer l'ensemble des imùages de mon groupe de monstre

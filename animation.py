@@ -1,7 +1,7 @@
 import pygame
 import random
 
-# définir une classe qui va gerer les animations
+
 class AnimateSprite(pygame.sprite.Sprite):
 
     # définir les choses a faire a la créations de l'entité
@@ -20,7 +20,7 @@ class AnimateSprite(pygame.sprite.Sprite):
 
     # definir une methode pour animer le sprite
     def animate(self, loop=False):
-        #verifier si l'animation est active
+        # verifier si l'animation est active
         if self.animation:
 
             # passer a l'image suivante
@@ -32,12 +32,13 @@ class AnimateSprite(pygame.sprite.Sprite):
                 self.current_image = 0
                 # verifier si l'animation n'est pas en mode boucle
                 if loop is False:
-                    #desactivation de l'animation
+                    # desactivation de l'animation
                     self.animation = False
 
             # modifier l'image précedente par la suivante
             self.image = self.images[self.current_image]
             self.image = pygame.transform.scale(self.image, self.size)
+
 
 # definir une fonction pour charger les images d'un sprite
 def load_animation_images(sprite_name):
@@ -54,8 +55,9 @@ def load_animation_images(sprite_name):
     # renvoyer le contenu des images
     return images
 
+
 # definir un dictionnaire qui va contenir les images chargées de chaque sprite
-#mummy -- [...mummy1.png, ...mummy2.png, ...]
+# mummy -- [...mummy1.png, ...mummy2.png, ...]
 animation = {
     'mummy': load_animation_images('mummy'),
     'player': load_animation_images('player'),
