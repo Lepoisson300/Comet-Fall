@@ -70,27 +70,27 @@ class Game:
         # actualiser l'animation du joueur
         self.player.update_animation()
 
-        # recuperer les projectiles du joueur
+        # récupérer les projectiles du joueur
         for projectile in self.player.all_projectiles:
             projectile.move()
 
-        # recuperant les monstre de notre jeu
+        # récupérant les monstre de notre jeu
         for monster in self.all_monster:
             monster.forward()
             monster.update_health_bar(screen)
             monster.update_animation()
 
-        # recuperer les comete de notre jeu
+        # récupérer les comète de notre jeu
         for comet in self.comet_event.all_comet:
             comet.fall()
 
-        # appliquer l'ensemble des iùmage de mon groupe de projectile
+        # appliquer l'ensemble des image de mon groupe de projectile
         self.player.all_projectiles.draw(screen)
         
         # appliquer l'ensemble des images de comet
         self.comet_event.all_comet.draw(screen)
 
-        # appliquer l'ensemble des imùages de mon groupe de monstre
+        # appliquer l'ensemble des images de mon groupe de monstre
         self.all_monster.draw(screen)
 
         # verifier si le joueur souhaite aller a gauche ou a droite
