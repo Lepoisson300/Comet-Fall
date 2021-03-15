@@ -4,6 +4,9 @@ from game import  Game
 from player import  Player
 pygame.init()
 
+#definir les musiques
+
+
 # définir une clock
 clock = pygame.time.Clock()
 FPS = 80
@@ -73,7 +76,12 @@ while running:
                 # met le jeu en mode lancé
                 game.start()
                 # jouer le son en question
+                VOLUME = pygame.mixer.music.get_volume() - 0.1
+
                 game.sound_manager.play('click')
+                menu = game.sound_manager.play('protect-2x')
+                menu.pygame.mixer.music.set_volume(0.1)
+
     # fixer le nombre de FPS
     clock.tick(FPS)
 
