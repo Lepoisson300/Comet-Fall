@@ -47,7 +47,7 @@ level = None
 while running:
 
     if game.background_change // 2 != level:
-        level = game.background_change // 2
+        level = game.background_change // 3
         file_name = f"assets/background/{backgrounds[str(level)]}"
         background = pygame.transform.scale(pygame.image.load(file_name), (1080, 720))
 
@@ -87,7 +87,9 @@ while running:
             if play_button_rect.collidepoint(event.pos):
                 # met le jeu en mode lancé
                 game.start()
-
+                menu_sound = pygame.mixer.Sound('assets/sounds/protect-2x.mp3')
+                menu_sound.set_volume(0.2)
+                menu_sound.play()
                 game.sound_manager.play('click')
 
 
