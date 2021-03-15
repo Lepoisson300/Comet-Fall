@@ -17,7 +17,7 @@ class Player(animation.AnimateSprite):
         self.all_projectiles = pygame.sprite.Group()
         self.rect = self.image.get_rect()
         self.rect.x = 400
-        self.rect.y = 500
+        self.rect.y = 450
         self.launch_issafe = True
 
     def damage(self, amount):

@@ -14,7 +14,7 @@ class Monster(animation.AnimateSprite):
         self.image = pygame.image.load('assets/mummy.png')
         self.rect = self.image.get_rect()
         self.rect.x = 1000 + random.randint(0, 300)
-        self.rect.y = 540 - offset
+        self.rect.y = 500 - offset
         self.loot_amount = 10
         self.velocity = random.randint(1, 3)
         self.start_animation()
@@ -70,7 +70,7 @@ class Mummy(Monster):
 class Alien(Monster):
 
     def __init__(self, game):
-        super().__init__(game, "alien", (300, 300), 130)
+        super().__init__(game, "alien", (300, 300), offset=145)
         self.health = 250
         self.max_health = 250
         self.attack = 0.8

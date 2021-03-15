@@ -13,13 +13,14 @@ FPS = 80
 
 # génère la fenêtre du jeu
 pygame.display.set_caption("Comet fall game")
-screen = pygame.display.set_mode((1080,720))
+screen = pygame.display.set_mode((1080, 720))
 
 # charge le jeu
 game = Game()
 
 # charge l'arrière plan de notre jeu
-background = pygame.image.load('assets/bg.jpg')
+background = pygame.transform.scale(
+    pygame.image.load('assets/bg.jpg'), (1080, 720))
 
 # import charger notre bannière
 banner = pygame.image.load('assets/banner.png')
@@ -40,7 +41,7 @@ running = True
 while running:
 
     # applique l'arrière plan
-    screen.blit(background, (0, -200))
+    screen.blit(background, (0, 0))
 
     # verifier si le jeu a commencé
     if game.is_playing:
@@ -81,9 +82,9 @@ while running:
                 menu_sound.set_volume(0.2)
                 menu_sound.play()
 
-        elif game.background_change == 1:
-            background = pygame.image.load('assets/bg_2.jpg')
-            background = pygame.transform.scale(background, (0, 0))
+    if game.background_change == 1:
+        background = pygame.image.load('assets/bg_2.jpg')
+        background = pygame.transform.scale(background, (1080, 720))
 
     # fixer le nombre de FPS
     clock.tick(FPS)
