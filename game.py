@@ -27,7 +27,9 @@ class Game:
         self.pressed = {}
         self.background_change = 0
 
+
     def start(self):
+
         self.is_playing = True
         self.spawn_monster(Mummy)
         self.spawn_monster(Mummy)

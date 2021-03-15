@@ -42,11 +42,15 @@ play_button_rect.x = math.ceil(screen.get_width() / 3.33)
 play_button_rect.y = math.ceil(screen.get_height() / 2)
 
 running = True
+level = None
 
 while running:
-    level = game.background_change // 2
-    file_name = f"assets/background/{backgrounds[str(level)]}"
-    background = pygame.transform.scale(pygame.image.load(file_name), (1080, 720))
+
+    if game.background_change // 2 != level:
+        level = game.background_change // 3
+        file_name = f"assets/background/{backgrounds[str(level)]}"
+        background = pygame.transform.scale(pygame.image.load(file_name), (1080, 720))
+
     # applique l'arrière plan
     screen.blit(background, (0, 0))
 
@@ -83,11 +87,11 @@ while running:
             if play_button_rect.collidepoint(event.pos):
                 # met le jeu en mode lancé
                 game.start()
-
-                game.sound_manager.play('click')
                 menu_sound = pygame.mixer.Sound('assets/sounds/protect-2x.mp3')
                 menu_sound.set_volume(0.2)
                 menu_sound.play()
+                game.sound_manager.play('click')
+
 
 
 
