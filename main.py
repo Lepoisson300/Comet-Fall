@@ -1,10 +1,10 @@
 import pygame
 import math
-from game import  Game
-from player import  Player
+from game import Game
+from player import Player
+from comet import Comet
 pygame.init()
-
-#definir les musiques
+# définir les musiques
 
 
 # définir une clock
@@ -78,8 +78,12 @@ while running:
 
                 game.sound_manager.play('click')
                 menu_sound = pygame.mixer.Sound('assets/sounds/protect-2x.mp3')
-                menu_sound.set_volume(0.5)
+                menu_sound.set_volume(0.2)
                 menu_sound.play()
+
+        elif game.background_change == 1:
+            background = pygame.image.load('assets/bg_2.jpg')
+            background = pygame.transform.scale(background, (0, 0))
 
     # fixer le nombre de FPS
     clock.tick(FPS)

@@ -25,6 +25,7 @@ class Game:
         # mettre le score a 0
         self.score = 0
         self.pressed = {}
+        self.background_change = 0
 
     def start(self):
         self.is_playing = True
