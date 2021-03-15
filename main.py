@@ -65,7 +65,7 @@ while running:
 
             # détecte si la touche espace est pressée pour le projectile
             if event.key == pygame.K_SPACE:
-                game.player.lunch_projectile()
+                game.player.launch_projectile()
 
         elif event.type == pygame.KEYUP:
             game.pressed[event.key] = False
@@ -75,12 +75,11 @@ while running:
             if play_button_rect.collidepoint(event.pos):
                 # met le jeu en mode lancé
                 game.start()
-                # jouer le son en question
-                VOLUME = pygame.mixer.music.get_volume() - 0.1
 
                 game.sound_manager.play('click')
-                menu = game.sound_manager.play('protect-2x')
-                menu.pygame.mixer.music.set_volume(0.1)
+                menu_sound = pygame.mixer.Sound('assets/sounds/protect-2x.mp3')
+                menu_sound.set_volume(0.5)
+                menu_sound.play()
 
     # fixer le nombre de FPS
     clock.tick(FPS)

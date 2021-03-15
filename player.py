@@ -28,7 +28,7 @@ class Player(animation.AnimateSprite):
         self.animate()
 
 
-    def lunch_projectile(self):
+    def launch_projectile(self):
         #creer une nouvelle instance de la classe projectile
 
         self.all_projectiles.add(Projectile(self))
