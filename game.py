@@ -26,8 +26,11 @@ class Game:
         self.score = 0
         self.pressed = {}
         self.background_change = 0
+        self.menu_sound = pygame.mixer.Sound('assets/sounds/protect-2x.mp3')
 
     def start(self):
+        self.menu_sound.set_volume(0.2)
+        self.menu_sound.play()
         self.is_playing = True
         self.spawn_monster(Mummy)
         self.spawn_monster(Mummy)
@@ -51,6 +54,7 @@ class Game:
         self.comet_event.reset_percent()
         self.is_playing = False
         self.score = 0
+        self.menu_sound.stop()
         self.sound_manager.play('game_over')
 
     def update(self, screen):
