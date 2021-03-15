@@ -17,7 +17,7 @@ FPS = 60
 
 # génère la fenêtre du jeu
 pygame.display.set_caption("Comet fall game")
-screen = pygame.display.set_mode((1080,720))
+screen = pygame.display.set_mode((1080, 720))
 
 # charge le jeu
 game = Game()
@@ -42,13 +42,13 @@ play_button_rect.x = math.ceil(screen.get_width() / 3.33)
 play_button_rect.y = math.ceil(screen.get_height() / 2)
 
 running = True
-level = None
+MAX_LEVEL = len(backgrounds)
 
 while running:
 
-    if game.background_change // 2 != level:
-        level = game.background_change // 3
-        file_name = f"assets/background/{backgrounds[str(level)]}"
+    if game.level != MAX_LEVEL and (game.background_change // 1 != game.level):
+        game.level = game.background_change // 1
+        file_name = f"assets/background/{backgrounds[str(game.level)]}"
         background = pygame.transform.scale(pygame.image.load(file_name), (1080, 720))
 
     # applique l'arrière plan
@@ -87,14 +87,9 @@ while running:
             if play_button_rect.collidepoint(event.pos):
                 # met le jeu en mode lancé
                 game.start()
-                menu_sound = pygame.mixer.Sound('assets/sounds/protect-2x.mp3')
-                menu_sound.set_volume(0.2)
-                menu_sound.play()
+                game.menu_sound.set_volume(0.2)
+                game.menu_sound.play()
                 game.sound_manager.play('click')
-
-
-
-
 
     # fixer le nombre de FPS
     clock.tick(FPS)
