@@ -8,9 +8,11 @@ from comet import Comet
 
 
 pygame.init()
-# définir les musiques
 
+BLUE = (40, 120, 230)
+GREEN = (40, 230, 120)
 
+center_x, center_y = 320, 240
 # définir une clock
 clock = pygame.time.Clock()
 FPS = 60
@@ -25,7 +27,6 @@ game = Game()
 # charge l'arrière plan de notre jeu
 with open("background.json", "r") as f:
     backgrounds = json.load(f)
-
 
 # import charger notre bannière
 banner = pygame.image.load('assets/banner.png')
@@ -43,6 +44,46 @@ play_button_rect.y = math.ceil(screen.get_height() / 2)
 
 running = True
 MAX_LEVEL = len(backgrounds)
+
+# creer le input
+font = pygame.font.SysFont('Comic Sans MS,Arial', 24)
+prompt = font.render('Entrez votre pseudo : ', True, BLUE)
+prompt_rect = prompt.get_rect(center=(center_x, center_y))
+
+
+# faire un input pour rentrer son pseudo
+
+user_input_value = ""
+user_input = font.render(user_input_value, True, GREEN)
+user_input_rect = user_input.get_rect(topleft=prompt_rect.topright)
+
+continuer = True
+
+while continuer:
+    for event in pygame.event.get():
+        if event.type == pygame.QUIT:
+            continuer = False
+            break
+        elif event.type == pygame.KEYDOWN:
+            if event.key in (pygame.K_RETURN, pygame.K_KP_ENTER):
+                continuer = False
+                break
+            elif event.key == pygame.K_BACKSPACE:
+                user_input_value = user_input_value[:-1]
+            else:
+                user_input_value += event.unicode
+            user_input = font.render(user_input_value, True, GREEN)
+            user_input_rect = user_input.get_rect(topleft=prompt_rect.topright)
+
+    clock.tick(30)
+
+    screen.fill(0)
+    screen.blit(prompt, prompt_rect)
+    screen.blit(user_input, user_input_rect)
+    pygame.display.flip()
+
+#print("Le pseudo de l'utilisateur est:", (user_input_value))
+
 
 while running:
 
@@ -93,4 +134,3 @@ while running:
 
     # fixer le nombre de FPS
     clock.tick(FPS)
-

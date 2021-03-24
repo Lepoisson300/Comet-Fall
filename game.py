@@ -1,5 +1,6 @@
 import pygame
 
+
 from comet_event import CometFallEvent
 from player import Player
 from monster import Monster, Mummy, Alien
@@ -24,6 +25,7 @@ class Game:
         self.font = pygame.font.Font("assets/Anton-Regular.ttf", 30)
         # mettre le score a 0
         self.score = 0
+        self.joueur = 'Rems24'
         self.pressed = {}
         self.background_change = 0
         self.level = None
@@ -60,7 +62,7 @@ class Game:
 
     def update(self, screen):
         """ afficher le score sur l'ecran """
-        score_text = self.font.render(f"Score : {self.score}", 1, (0, 0, 0))
+        score_text = self.font.render(f"{self.joueur}, Score : {self.score}", 1, (0, 0, 0))
         screen.blit(score_text, (20, 20))
 
         # appliquer l'image de mon joueur
