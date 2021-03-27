@@ -8,8 +8,11 @@ from comet import Comet
 
 
 pygame.init()
-# définir les musiques
 
+BLUE = (40, 120, 230)
+GREEN = (40, 230, 120)
+
+center_x, center_y = 320, 240
 
 # définir une clock
 clock = pygame.time.Clock()
@@ -34,15 +37,58 @@ banner_rect = banner.get_rect()
 banner_rect.x = math.ceil(screen.get_width() / 4)
 
 
-# charge le bouton
+# charge le bouton pour lancer le jeu
 play_button = pygame.image.load('assets/button.png')
 play_button = pygame.transform.scale(play_button, (400, 150))
 play_button_rect = play_button.get_rect()
 play_button_rect.x = math.ceil(screen.get_width() / 3.33)
 play_button_rect.y = math.ceil(screen.get_height() / 2)
 
+# charge le bouton pour quitter le jeu
+quit_button = pygame.image.load('assets/quit_button.png')
+quit_button = pygame.transform.scale(quit_button, (100, 100))
+quit_button_rect = quit_button.get_rect()
+quit_button_rect.x = math.ceil(screen.get_width() / 5)
+quit_button_rect.y = math.ceil(screen.get_height() / 2)
+
 running = True
 level = None
+
+# creer le input
+font = pygame.font.SysFont('Comic Sans MS,Arial', 24)
+prompt = font.render('Entrez votre pseudo : ', True, BLUE)
+prompt_rect = prompt.get_rect(center=(center_x, center_y))
+
+
+# faire un input pour rentrer son pseudo
+user_input_value = ""
+user_input = font.render(user_input_value, True, GREEN)
+user_input_rect = user_input.get_rect(topleft=prompt_rect.topright)
+
+continuer = True
+
+while continuer:
+    for event in pygame.event.get():
+        if event.type == pygame.QUIT:
+            continuer = False
+            break
+        elif event.type == pygame.KEYDOWN:
+            if event.key in (pygame.K_RETURN, pygame.K_KP_ENTER):
+                continuer = False
+                break
+            elif event.key == pygame.K_BACKSPACE:
+                user_input_value = user_input_value[:-1]
+            else:
+                user_input_value += event.unicode
+            user_input = font.render(user_input_value, True, GREEN)
+            user_input_rect = user_input.get_rect(topleft=prompt_rect.topright)
+
+    clock.tick(30)
+
+    screen.fill(0)
+    screen.blit(prompt, prompt_rect)
+    screen.blit(user_input, user_input_rect)
+    pygame.display.flip()
 
 while running:
 
@@ -61,6 +107,7 @@ while running:
     else:
         # ajoute l'écran de bienvenue
         screen.blit(play_button, play_button_rect)
+        screen.blit(quit_button, quit_button_rect)
         screen.blit(banner, banner_rect)
 
     # met à jour l'affichage
@@ -75,7 +122,7 @@ while running:
         elif event.type == pygame.KEYDOWN:
             game.pressed[event.key] = True
 
-            # détecte si la touche espace est pressée pour le projectile
+            # détecte si la touche espace est pressée pour lancer le projectile
             if event.key == pygame.K_SPACE:
                 game.player.launch_projectile()
 
@@ -92,9 +139,8 @@ while running:
                 menu_sound.play()
                 game.sound_manager.play('click')
 
-
-
-
+            elif quit_button_rect.collidepoint(event.pos):
+                pygame.quit()
 
     # fixer le nombre de FPS
     clock.tick(FPS)

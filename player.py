@@ -55,5 +55,12 @@ class Player(animation.AnimateSprite):
         if not self.game.check_colision(self, self.game.all_monster):
             self.rect.x += self.velocity
 
+    def jump(self):
+        # si le joueur appuie sur la fleche du haut, il saute
+        for i in range(15):
+            self.rect.y += 1
+        for i in range(15):
+            self.rect.y -= 1
+
     def move_left(self):
         self.rect.x -= self.velocity

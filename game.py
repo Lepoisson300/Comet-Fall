@@ -100,3 +100,5 @@ class Game:
             self.player.move_right()
         elif self.pressed.get(pygame.K_LEFT) and self.player.rect.x > 0:
             self.player.move_left()
+        elif self.pressed.get(pygame.K_UP):
+            self.player.jump()
