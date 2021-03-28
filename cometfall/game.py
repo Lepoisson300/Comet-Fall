@@ -11,8 +11,8 @@ from sounds import SoundManager
 
 class Game:
 
-    MAX_LEVEL = 2
-    LEVEL_INCREMENT = 2
+    MAX_LEVEL = 3
+    LEVEL_INCREMENT = 1
 
     def __init__(self):
         self.is_playing = False
@@ -21,21 +21,19 @@ class Game:
         self.comet_event = CometFallEvent(self)
         self.all_monster = pygame.sprite.Group()
         self.sound_manager = SoundManager()
-        self.menu_sound = pygame.mixer.Sound('cometfall/assets/sounds/protect-2x.mp3')
         self.font = pygame.font.Font("cometfall/assets/fonts/Anton-Regular.ttf", 30)
         self.score = 0
         self.level = {}
         self.pressed = {}
         self.comet_event_number = 0
-        image = pygame.image.load(f"cometfall/assets/background/volcan.jpg")
-        self.background = pygame.transform.scale(image, (1080, 720))
+        image = pygame.image.load(f"cometfall/assets/background/planet.jpg")
+        self.background = pygame.transform.scale(image, (1200, 720))
 
     def start(self):
         self.is_playing = True
         self.load_level()
         self.spawn_monsters()
-        self.menu_sound.set_volume(0.2)
-        self.menu_sound.play()
+        self.sound_manager.play('menu_sound', volume=0.2)
         self.sound_manager.play('click')
 
     def spawn_monsters(self, n=None):
@@ -71,8 +69,9 @@ class Game:
         self.comet_event.reset_percent()
         self.is_playing = False
         self.score = 0
-        self.menu_sound.stop()
+        self.sound_manager.stop('menu_sound')
         self.sound_manager.play('game_over')
+        self.load_level(1)
 
     def update(self, screen):
         """ afficher le score sur l'ecran """
