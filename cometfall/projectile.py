@@ -7,7 +7,7 @@ class Projectile(pygame.sprite.Sprite):
         super().__init__()
         self. velocity = 5
         self.player = player
-        self.image = pygame.image.load('assets/projectile.png')
+        self.image = pygame.image.load('cometfall/assets/projectile.png')
         self.image = pygame.transform.scale(self.image, (50, 50))
         self.rect = self.image.get_rect()
         self.rect.x = player.rect.x + 120
@@ -19,7 +19,7 @@ class Projectile(pygame.sprite.Sprite):
         # tourner le projectile
         self.angle += 12
         self.image = pygame.transform.rotozoom(self.origin_image, self.angle, 1)
-        self.rect = self.image.get_rect(center = self.rect.center )
+        self.rect = self.image.get_rect(center=self.rect.center)
 
     def remove(self):
         self.player.all_projectiles.remove(self)
@@ -29,8 +29,8 @@ class Projectile(pygame.sprite.Sprite):
         self.rotate()
         # test si le projectile entre en collision avec un monstre
         for monster in self.player.game.check_colision(self, self.player.game.all_monster):
-            self.remove() # supprimer la boule de feu
-            monster.damage(self.player.attack) # infliger des dégats
+            self.remove()  # supprimer la boule de feu
+            monster.damage(self.player.attack)  # infliger des dégats
 
         # verifier si notre n'est plus recent sur l'ecran
         if self.rect.x > 1080:

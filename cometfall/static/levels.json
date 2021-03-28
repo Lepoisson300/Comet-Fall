@@ -1,0 +1,29 @@
+{
+  "1":
+  {
+    "background": "volcan.jpg",
+    "monsters": ["Alien", "Mummy"],
+    "probability": [0.2, 0.8],
+    "spawn_number": 4
+  },
+  "2":
+  {
+    "background": "desert.jpg",
+    "monsters": ["Alien", "Mummy"],
+    "probability": [0.4, 0.6],
+    "attack_bonus": "10%",
+    "health_bonus": "25%",
+    "spawn_number": 5,
+    "player_bonus": "10%"
+  },
+  "3":
+  {
+    "background": "espace.jpg",
+    "monsters": ["Alien", "Mummy"],
+    "probability": [0.6, 0.4],
+    "attack_bonus": "20%",
+    "health_bonus": "50%",
+    "spawn_number": 6,
+    "player_bonus": "20%"
+  }
+}

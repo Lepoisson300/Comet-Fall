@@ -1,5 +1,6 @@
-import pygame
 import random
+
+import pygame
 
 
 class AnimateSprite(pygame.sprite.Sprite):
@@ -8,9 +9,9 @@ class AnimateSprite(pygame.sprite.Sprite):
     def __init__(self, sprite_name, size=(200, 200)):
         super().__init__()
         self.size = size
-        self.image = pygame.image.load(f'assets/{sprite_name}.png')
+        self.image = pygame.image.load(f'cometfall/assets/{sprite_name}.png')
         self.image = pygame.transform.scale(self.image, size)
-        self.current_image = 0 # commener l'anim a l'image 0
+        self.current_image = 0  # commener l'anim a l'image 0
         self.images = animation.get(sprite_name)
         self.animation = False
 
@@ -45,11 +46,11 @@ def load_animation_images(sprite_name):
     # charger les 24 images de ce sprite correspondant
     images = []
     # recuperer le chemin du dossier pour ce sprite
-    path = f"assets/{sprite_name}/{sprite_name}"
+    path = f"cometfall/assets/{sprite_name}/{sprite_name}"
 
     # boucler sur chaque images dans ce dossier
     for num in range(1, 24):
-        image_path = path + str(num) + '.png'
+        image_path = path + f'{num}.png'
         images.append(pygame.image.load(image_path))
 
     # renvoyer le contenu des images

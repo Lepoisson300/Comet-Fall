@@ -1,5 +1,6 @@
-import pygame
 from threading import Timer
+
+import pygame
 
 from projectile import Projectile
 import animation
@@ -12,7 +13,7 @@ class Player(animation.AnimateSprite):
         self.game = game
         self.health = 100
         self.max_health = 100
-        self.attack = 100
+        self.attack = 80
         self.velocity = 5
         self.all_projectiles = pygame.sprite.Group()
         self.rect = self.image.get_rect()
