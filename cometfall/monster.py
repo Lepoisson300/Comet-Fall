@@ -9,15 +9,15 @@ class Monster(animation.AnimateSprite):
                  max_health=100, attack=0.3):
         super().__init__(name, size)
         self.game = game
-        self.max_health = 100
-        self.health = max_health
+        self.max_health = int(max_health)
+        self.health = int(max_health)
         self.attack = attack
         self.default_speed = 1
         self.rect = self.image.get_rect()
         self.rect.x = 1000 + random.randint(0, 300)
         self.rect.y = 500 - offset
         self.loot_amount = 10
-        self.velocity = random.randint(1, 3)
+        self.velocity = random.randint(1, self.default_speed)
         self.start_animation()
 
     def set_loot_amount(self, amount):
@@ -66,8 +66,8 @@ class Mummy(Monster):
 
     def __init__(self, game, health_factor=1, attack_factor=1):
         super().__init__(game, "mummy", (130, 130),
-                         max_health=180*health_factor, attack=0.5*attack_factor)
-        self.default_speed = 3
+                         max_health=120*health_factor, attack=0.5*attack_factor)
+        self.default_speed = 4
         self.set_loot_amount(20)
 
 

@@ -105,7 +105,8 @@ while running:
         elif event.type == pygame.MOUSEBUTTONDOWN:
             # vérification si la souris est en collision avec le bouton jouer
             if play_button_rect.collidepoint(event.pos):
-                game.start()
+                if not game.is_playing:
+                    game.start()
 
             elif quit_button_rect.collidepoint(event.pos):
                 running = False

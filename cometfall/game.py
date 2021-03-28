@@ -21,6 +21,7 @@ class Game:
         self.comet_event = CometFallEvent(self)
         self.all_monster = pygame.sprite.Group()
         self.sound_manager = SoundManager()
+        self.menu_sound = pygame.mixer.Sound('cometfall/assets/sounds/protect-2x.mp3')
         self.font = pygame.font.Font("cometfall/assets/fonts/Anton-Regular.ttf", 30)
         self.score = 0
         self.level = {}
@@ -30,12 +31,11 @@ class Game:
         self.background = pygame.transform.scale(image, (1080, 720))
 
     def start(self):
-        self.load_level()
         self.is_playing = True
+        self.load_level()
         self.spawn_monsters()
-        menu_sound = pygame.mixer.Sound('cometfall/assets/sounds/protect-2x.mp3')
-        menu_sound.set_volume(0.2)
-        menu_sound.play()
+        self.menu_sound.set_volume(0.2)
+        self.menu_sound.play()
         self.sound_manager.play('click')
 
     def spawn_monsters(self, n=None):
@@ -71,6 +71,7 @@ class Game:
         self.comet_event.reset_percent()
         self.is_playing = False
         self.score = 0
+        self.menu_sound.stop()
         self.sound_manager.play('game_over')
 
     def update(self, screen):
@@ -117,11 +118,11 @@ class Game:
         Apply values defined in levels.json for current level
         """
         if self.comet_event_number % self.LEVEL_INCREMENT == 0:
-            level = wanted_level or (self.comet_event_number // self.LEVEL_INCREMENT)
+            level = wanted_level or (self.comet_event_number // self.LEVEL_INCREMENT + 1)
+            if level <= self.MAX_LEVEL:
+                with open("cometfall/static/levels.json", 'r', encoding='utf-8') as f:
+                    self.level = json.load(f)[f"level {level}"]
 
-            with open("cometfall/static/levels.json", 'r', encoding='utf-8') as f:
-                levels = json.load(f)
-                self.level = levels.get(str(level), levels[str(self.MAX_LEVEL)])
-
-            image = pygame.image.load(f"cometfall/assets/background/{self.level['background']}")
-            self.background = pygame.transform.scale(image, (1080, 720))
+                image = pygame.image.load(
+                    f"cometfall/assets/background/{self.level['background']}")
+                self.background = pygame.transform.scale(image, (1080, 720))

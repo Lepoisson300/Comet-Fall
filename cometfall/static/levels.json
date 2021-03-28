@@ -1,12 +1,12 @@
 {
-  "1":
+  "level 1":
   {
     "background": "volcan.jpg",
     "monsters": ["Alien", "Mummy"],
-    "probability": [0.2, 0.8],
+    "probability": [0.5, 0.5],
     "spawn_number": 4
   },
-  "2":
+  "level 2":
   {
     "background": "desert.jpg",
     "monsters": ["Alien", "Mummy"],
@@ -16,7 +16,7 @@
     "spawn_number": 5,
     "player_bonus": "10%"
   },
-  "3":
+  "level 3":
   {
     "background": "espace.jpg",
     "monsters": ["Alien", "Mummy"],
