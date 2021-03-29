@@ -31,7 +31,7 @@ class Player(animation.AnimateSprite):
             # si le joueur n'a plus de point de vie
             self.game.game_over()
 
-    def _launch_cooldown(self, t=0.4):
+    def _launch_cooldown(self, t=0.2):
         """ Create cooldown between each projectile """
         def make_launch_safe():
             self.launch_issafe = True
@@ -43,8 +43,7 @@ class Player(animation.AnimateSprite):
             # créer une nouvelle instance de la classe projectile
             self._launch_cooldown()
             self.all_projectiles.add(Projectile(self))
-            # self.start_animation()
-            self.game.sound_manager.play('tir', volume=0.5)
+            self.game.sound_manager.play('tir', volume=0.05)
 
     def update_health_bar(self, surface):
         # dessiner notre barre de vie

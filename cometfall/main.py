@@ -18,7 +18,7 @@ screen = pygame.display.set_mode((1080, 720))
 game = Game()
 
 # charge notre bannière
-banner = pygame.image.load('cometfall/assets/banner.png')
+banner = pygame.image.load('cometfall/assets/banner_1.png')
 banner = pygame.transform.scale(banner, (400, 400))
 banner_rect = banner.get_rect()
 banner_rect.x = math.ceil(screen.get_width() / 3.33)
@@ -96,7 +96,9 @@ while running:
             game.pressed[event.key] = True
 
             # détecte si la touche espace est pressée pour lancer le projectile
-            if event.key == pygame.K_SPACE:
+            if event.key == pygame.KMOD_CTRL :
+                game.player.launch_projectile()
+            elif event.key == pygame.K_SPACE:
                 game.player.launch_projectile()
 
         elif event.type == pygame.KEYUP:
