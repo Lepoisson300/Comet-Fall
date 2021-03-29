@@ -25,6 +25,7 @@ class Game:
         self.score = 0
         self.level = {}
         self.pressed = {}
+        self.username = None
         self.comet_event_number = 0
         image = pygame.image.load(f"cometfall/assets/background/planet.jpg")
         self.background = pygame.transform.scale(image, (1200, 720))
@@ -75,9 +76,12 @@ class Game:
         self.load_level(1)
 
     def update(self, screen):
-        """ afficher le score sur l'ecran """
+        """ Update the screen display"""
         score_text = self.font.render(f"Score : {self.score}", True, (0, 0, 0))
         screen.blit(score_text, (20, 20))
+        username = self.font.render(self.username, True, (0, 0, 0))
+        screen.blit(username, (950, 20))
+
         # appliquer l'image du joueur
         if self.pressed.get(pygame.K_SPACE):  # shoot mode
             screen.blit(self.player.shoot_image, self.player.rect)
@@ -128,9 +132,9 @@ class Game:
                 image = pygame.image.load(
                     f"cometfall/assets/background/{self.level['background']}")
                 self.background = pygame.transform.scale(image, (1080, 720))
-                if self.level.get('game_sound'):
+                if sound := self.level.get('game_sound'):
                     self.sound_manager.stop_all()
-                    self.sound_manager.play(self.level['game_sound'], volume=0.2)
+                    self.sound_manager.play(sound, volume=0.2)
                 else:
                     raise AttributeError(f"You must define a game_sound attribute "
                                          f"for the level {level}")

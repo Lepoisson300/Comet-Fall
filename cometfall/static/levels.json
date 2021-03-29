@@ -12,7 +12,7 @@
     "background": "desert.jpg",
     "monsters": ["Alien", "Squeletton"],
     "probability": [0.4, 0.6],
-    "attack_bonus": "10%",
+    "attack_bonus": "100%",
     "spawn_number": 5,
     "player_bonus": "-10%",
     "game_sound": "protect-2x"

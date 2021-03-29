@@ -48,7 +48,7 @@ class CometFallEvent:
     # lors du chargement -- creer un compteur
     def __init__(self, game):
         self.percent = 0
-        self.percent_speed = 0.25
+        self.percent_speed = 0.02
         self.game = game
         self.fall_mode = False
 
@@ -56,7 +56,7 @@ class CometFallEvent:
         self.all_comet = pygame.sprite.Group()
 
     def add_percent(self):
-        self.percent += self.percent_speed / 5
+        self.percent += self.percent_speed
 
     def reset_percent(self):
         self.percent = 0
