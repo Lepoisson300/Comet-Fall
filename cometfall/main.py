@@ -98,9 +98,6 @@ while running:
             # détecte si la touche espace est pressée pour lancer le projectile
             if event.key == pygame.K_SPACE:
                 game.player.launch_projectile()
-                # génere l'image de mon joueur en mode tir
-                player_T = pygame.image.load('cometfall/assets/player_T.png')
-                screen.blit(player_T, game.player.rect)
 
         elif event.type == pygame.KEYUP:
             game.pressed[event.key] = False

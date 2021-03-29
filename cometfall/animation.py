@@ -10,22 +10,24 @@ class AnimateSprite(pygame.sprite.Sprite):
         image = pygame.image.load(f'cometfall/assets/{sprite_name}.png')
         self.image = pygame.transform.scale(image, size)
         self.current_image = 0  # commencer l'animation a l'image 0
-        self.images = animation.get(sprite_name)
+        self._images = animation.get(sprite_name)
         self.im_index = 0
         self.animation = False
+
+    def set_images(self, name):
+        self._images = animation.get(name)
 
     # définir une methode pour démarer l'animation
     def start_animation(self):
         self.animation = True
 
-    # définir une methode pour animer le sprite
+    #  définir une methode pour animer le sprite
     def animate(self, loop=False):
-        if self.animation:
-            self.image = pygame.transform.scale(self.images[self.im_index], self.size)
-            self.im_index = (self.im_index + 1) % len(self.images)
-            # If we have used all images
-            if not loop and self.im_index == 1:
-                self.animation = False
+        self.im_index = (self.im_index + 1) % len(self._images)
+        self.image = pygame.transform.scale(self._images[self.im_index], self.size)
+        # If we have used all images
+        if not loop and self.im_index == 0:
+            self.animation = False
 
 
 # définir une fonction pour charger les images d'un sprite
@@ -45,8 +47,8 @@ def load_animation_images(sprite_name, number_of_images, *, fps=1):
 # mummy -- [...mummy1.png, ...mummy2.png, ...]
 animation = {
     'mummy': load_animation_images('mummy', 24),
-    'player': load_animation_images('player', 7, fps=5),
-    'player_left': load_animation_images('player_left', 8, fps=5),
+    'player': load_animation_images('player', 8, fps=3),
+    'player_left': load_animation_images('player_left', 8, fps=3),
     'alien': load_animation_images('alien', 24),
     'squeletton': load_animation_images('squeletton', 6)
 }

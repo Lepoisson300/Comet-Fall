@@ -77,9 +77,14 @@ class Game:
         """ afficher le score sur l'ecran """
         score_text = self.font.render(f"Score : {self.score}", True, (0, 0, 0))
         screen.blit(score_text, (20, 20))
-        self.player.animate()
         # appliquer l'image du joueur
-        screen.blit(self.player.image, self.player.rect)
+        if self.pressed.get(pygame.K_SPACE):  # shoot mode
+            screen.blit(self.player.shoot_image, self.player.rect)
+        elif self.player.animation:
+            self.player.animate()
+            screen.blit(self.player.image, self.player.rect)
+        else:
+            screen.blit(self.player.default_image, self.player.rect)
         self.player.update_health_bar(screen)
         self.comet_event.update_bar(screen)
 
@@ -102,12 +107,13 @@ class Game:
         self.all_monster.draw(screen)
 
         # verifier si le joueur souhaite aller à gauche ou à droite
-        if self.pressed.get(pygame.K_RIGHT) and \
-                self.player.rect.x + self.player.rect.width < screen.get_width():
-            self.player.move_right()
-        elif self.pressed.get(pygame.K_LEFT) and self.player.rect.x > 0:
-            self.player.move_left()
-        elif self.pressed.get(pygame.K_UP):
+        if not self.pressed.get(pygame.K_SPACE):
+            if self.pressed.get(pygame.K_RIGHT) and \
+                    self.player.rect.x + self.player.rect.width < screen.get_width():
+                self.player.move_right()
+            elif self.pressed.get(pygame.K_LEFT) and self.player.rect.x > 0:
+                self.player.move_left()
+        if self.pressed.get(pygame.K_UP):
             self.player.jump()
 
     def load_level(self, wanted_level=None):
