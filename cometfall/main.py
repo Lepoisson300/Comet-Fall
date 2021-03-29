@@ -22,22 +22,22 @@ banner = pygame.image.load('cometfall/assets/banner_1.png')
 banner = pygame.transform.scale(banner, (400, 400))
 banner_rect = banner.get_rect()
 banner_rect.x = math.ceil(screen.get_width() / 3.33)
-banner_rect.y = 50
+banner_rect.y = 110
 
 
 # charge le bouton pour lancer le jeu
-play_button = pygame.image.load('cometfall/assets/button.png')
-play_button = pygame.transform.scale(play_button, (400, 300))
+play_button = pygame.image.load('cometfall/assets/button_1.png')
+play_button = pygame.transform.scale(play_button, (370, 100))
 play_button_rect = play_button.get_rect()
-play_button_rect.x = 350
-play_button_rect.y = 310
+play_button_rect.x = 365
+play_button_rect.y = 415
 
 # charge le bouton pour quitter le jeu
 quit_button = pygame.image.load('cometfall/assets/quit_button.png')
-quit_button = pygame.transform.scale(quit_button, (100, 100))
+quit_button = pygame.transform.scale(quit_button, (200, 60))
 quit_button_rect = quit_button.get_rect()
-quit_button_rect.x = math.ceil(screen.get_width() / 5)
-quit_button_rect.y = 400
+quit_button_rect.x = 150
+quit_button_rect.y = 440
 
 # creer le input
 font = pygame.font.SysFont('Comic Sans MS,Arial', 24)
