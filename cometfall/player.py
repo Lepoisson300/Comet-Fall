@@ -48,8 +48,10 @@ class Player(animation.AnimateSprite):
 
     def update_health_bar(self, surface):
         # dessiner notre barre de vie
-        pygame.draw.rect(surface, (60, 63, 60), [self.rect.x + 50, self.rect.y + 20, self.max_health, 7])
-        pygame.draw.rect(surface, (111, 210, 46), [self.rect.x + 50, self.rect.y + 20, self.health, 7])
+        pygame.draw.rect(surface, (60, 63, 60),
+                         [self.rect.x + 50, self.rect.y + 20, self.max_health, 7])
+        pygame.draw.rect(surface, (111, 210, 46),
+                         [self.rect.x + 50, self.rect.y + 20, self.health, 7])
 
     def move_right(self):
         # si le joueur n'est pas en collision avec une entité monstre
@@ -63,10 +65,4 @@ class Player(animation.AnimateSprite):
         self.rect.x -= self.velocity
         self.start_animation()
 
-    def jump(self):
-        # si le joueur appuie sur la fleche du haut, il saute
-        for i in range(15):
-            self.rect.y += 1
-        for i in range(15):
-            self.rect.y -= 1
 

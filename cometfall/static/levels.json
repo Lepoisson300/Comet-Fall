@@ -4,16 +4,18 @@
     "background": "volcan.jpg",
     "monsters": ["Alien", "Mummy"],
     "probability": [0.2, 0.8],
-    "spawn_number": 4
+    "spawn_number": 4,
+    "game_sound": "protect-2x"
   },
   "level 2":
   {
     "background": "desert.jpg",
-    "monsters": ["Alien", "squeletton"],
+    "monsters": ["Alien", "Squeletton"],
     "probability": [0.4, 0.6],
     "attack_bonus": "10%",
     "spawn_number": 5,
-    "player_bonus": "-10%"
+    "player_bonus": "-10%",
+    "game_sound": "protect-2x"
   },
   "level 3":
   {
@@ -22,6 +24,7 @@
     "probability": [0.6, 0.4],
     "attack_bonus": "20%",
     "spawn_number": 6,
-    "player_bonus": "-20%"
+    "player_bonus": "-20%",
+    "game_sound": "protect-2x"
   }
 }

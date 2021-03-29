@@ -5,7 +5,7 @@ import numpy as np
 
 from comet import CometFallEvent
 from player import Player
-from monster import Mummy, Alien
+import monster
 from sounds import SoundManager
 
 
@@ -33,7 +33,6 @@ class Game:
         self.is_playing = True
         self.load_level()
         self.spawn_monsters()
-        self.sound_manager.play('menu_sound', volume=0.2)
         self.sound_manager.play('click')
 
     def spawn_monsters(self, n=None):
@@ -47,11 +46,13 @@ class Game:
         spawn_number = n or int(self.level.get('spawn_number'))
         monsters = np.random.choice(monsters_type, spawn_number, p=probability)
 
-        for monster in monsters:
-            if monster.lower() == "mummy":
-                self.all_monster.add(Mummy(self, health_factor, attack_factor))
-            elif monster.lower() == "alien":
-                self.all_monster.add(Alien(self, health_factor, attack_factor))
+        for name in monsters:
+            try:
+                monster_type = getattr(monster, name.title())
+            except AttributeError:
+                raise AttributeError(
+                    f"Monster {name.title()} not exists, check the levels.json file")
+            self.all_monster.add(monster_type(self, health_factor, attack_factor))
 
     def add_score(self, points=10):
         self.score += points
@@ -69,7 +70,7 @@ class Game:
         self.comet_event.reset_percent()
         self.is_playing = False
         self.score = 0
-        self.sound_manager.stop('menu_sound')
+        self.sound_manager.stop_all()
         self.sound_manager.play('game_over')
         self.load_level(1)
 
@@ -93,10 +94,10 @@ class Game:
             projectile.move()
 
         # récupérer les monstres de notre jeu
-        for monster in self.all_monster:
-            monster.forward()
-            monster.update_health_bar(screen)
-            monster.update_animation()
+        for active_monster in self.all_monster:
+            active_monster.forward()
+            active_monster.update_health_bar(screen)
+            active_monster.update_animation()
 
         # récupérer les comètes de notre jeu
         for comet in self.comet_event.all_comet:
@@ -113,8 +114,6 @@ class Game:
                 self.player.move_right()
             elif self.pressed.get(pygame.K_LEFT) and self.player.rect.x > 0:
                 self.player.move_left()
-        if self.pressed.get(pygame.K_UP):
-            self.player.jump()
 
     def load_level(self, wanted_level=None):
         """
@@ -129,3 +128,9 @@ class Game:
                 image = pygame.image.load(
                     f"cometfall/assets/background/{self.level['background']}")
                 self.background = pygame.transform.scale(image, (1080, 720))
+                if self.level.get('game_sound'):
+                    self.sound_manager.stop_all()
+                    self.sound_manager.play(self.level['game_sound'], volume=0.2)
+                else:
+                    raise AttributeError(f"You must define a game_sound attribute "
+                                         f"for the level {level}")

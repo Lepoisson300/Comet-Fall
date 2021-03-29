@@ -31,14 +31,14 @@ class AnimateSprite(pygame.sprite.Sprite):
 
 
 # définir une fonction pour charger les images d'un sprite
-def load_animation_images(sprite_name, number_of_images, *, fps=1):
+def load_animation_images(sprite_name, number_of_images, *, slow_factor=1):
     # charger les 24 images de ce sprite correspondant
     images = []
     path = f"cometfall/assets/{sprite_name}/{sprite_name}"
 
     for num in range(1, number_of_images+1):
         image_path = path + f'{num}.png'
-        images.extend([pygame.image.load(image_path)] * fps)
+        images.extend([pygame.image.load(image_path)] * slow_factor)
 
     return images
 
@@ -47,8 +47,8 @@ def load_animation_images(sprite_name, number_of_images, *, fps=1):
 # mummy -- [...mummy1.png, ...mummy2.png, ...]
 animation = {
     'mummy': load_animation_images('mummy', 24),
-    'player': load_animation_images('player', 8, fps=3),
-    'player_left': load_animation_images('player_left', 8, fps=3),
+    'player': load_animation_images('player', 8, slow_factor=3),
+    'player_left': load_animation_images('player_left', 8, slow_factor=3),
     'alien': load_animation_images('alien', 24),
-    'squeletton': load_animation_images('squeletton', 6)
+    'squeletton': load_animation_images('squeletton', 6, slow_factor=3)
 }
