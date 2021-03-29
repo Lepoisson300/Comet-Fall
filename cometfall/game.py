@@ -78,9 +78,8 @@ class Game:
         score_text = self.font.render(f"Score : {self.score}", True, (0, 0, 0))
         screen.blit(score_text, (20, 20))
 
-        # appliquer l'image dujoueur
+        # appliquer l'image du joueur
         screen.blit(self.player.image, self.player.rect)
-
         self.player.update_health_bar(screen)
         self.comet_event.update_bar(screen)
         self.player.update_animation()

@@ -78,3 +78,12 @@ class Alien(Monster):
                          max_health=250*health_factor, attack=0.8*attack_factor)
         self.default_speed = 2
         self.set_loot_amount(80)
+
+
+class Squeletton(Monster):
+
+    def __init__(self, game, health_factor=1, attack_factor=1):
+        super().__init__(game, "squeletton", (120, 120),
+                         max_health=120*health_factor, attack=0.5*attack_factor)
+        self.default_speed = 6
+        self.set_loot_amount(10)

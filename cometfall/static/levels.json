@@ -9,7 +9,7 @@
   "level 2":
   {
     "background": "desert.jpg",
-    "monsters": ["Alien", "Mummy"],
+    "monsters": ["Alien", "squeletton"],
     "probability": [0.4, 0.6],
     "attack_bonus": "10%",
     "spawn_number": 5,

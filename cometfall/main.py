@@ -1,6 +1,7 @@
 import pygame
 import math
 
+from player import Player
 from game import Game
 
 pygame.init()
@@ -18,6 +19,8 @@ screen = pygame.display.set_mode((1080, 720))
 # charge le jeu
 game = Game()
 
+# génere l'image de mon joueur en mode tir
+player_T = pygame.image.load('cometfall/assets/player_T.png')
 # charge notre bannière
 banner = pygame.image.load('cometfall/assets/banner.png')
 banner = pygame.transform.scale(banner, (400, 400))
@@ -99,7 +102,7 @@ while running:
             # détecte si la touche espace est pressée pour lancer le projectile
             if event.key == pygame.K_SPACE:
                 game.player.launch_projectile()
-
+                screen.blit(player_T)
         elif event.type == pygame.KEYUP:
             game.pressed[event.key] = False
             

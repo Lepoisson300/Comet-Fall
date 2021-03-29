@@ -18,8 +18,10 @@ class Player(animation.AnimateSprite):
         self.all_projectiles = pygame.sprite.Group()
         self.rect = self.image.get_rect()
         self.rect.x = 400
-        self.rect.y = 450
+        self.rect.y = 470
         self.launch_issafe = True
+        self.player = pygame.image.load('cometfall/assets/player.png')
+        self.player_tir = pygame.image.load('cometfall/assets/player_T.png')
 
     def damage(self, amount):
         if self.health - amount > amount:
@@ -43,7 +45,7 @@ class Player(animation.AnimateSprite):
             # créer une nouvelle instance de la classe projectile
             self._launch_cooldown()
             self.all_projectiles.add(Projectile(self))
-            self.start_animation()
+            # self.start_animation()
             self.game.sound_manager.play('tir', volume=0.5)
 
     def update_health_bar(self, surface):
@@ -52,9 +54,10 @@ class Player(animation.AnimateSprite):
         pygame.draw.rect(surface, (111, 210, 46), [self.rect.x + 50, self.rect.y + 20, self.health, 7])
 
     def move_right(self):
-        # si le joueur n'est pas en colision avec une entité monstre
+        # si le joueur n'est pas en collision avec une entité monstre
         if not self.game.check_colision(self, self.game.all_monster):
             self.rect.x += self.velocity
+            self.start_animation()
 
     def jump(self):
         # si le joueur appuie sur la fleche du haut, il saute
@@ -65,3 +68,4 @@ class Player(animation.AnimateSprite):
 
     def move_left(self):
         self.rect.x -= self.velocity
+        self.start_animation()
