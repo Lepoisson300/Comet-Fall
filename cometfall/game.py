@@ -77,12 +77,11 @@ class Game:
         """ afficher le score sur l'ecran """
         score_text = self.font.render(f"Score : {self.score}", True, (0, 0, 0))
         screen.blit(score_text, (20, 20))
-
+        self.player.animate()
         # appliquer l'image du joueur
         screen.blit(self.player.image, self.player.rect)
         self.player.update_health_bar(screen)
         self.comet_event.update_bar(screen)
-        self.player.update_animation()
 
         # récupérer les projectiles du joueur
         for projectile in self.player.all_projectiles:

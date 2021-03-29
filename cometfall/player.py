@@ -30,9 +30,6 @@ class Player(animation.AnimateSprite):
             # si le joueur n'a plus de point de vie
             self.game.game_over()
 
-    def update_animation(self):
-        self.animate()
-
     def _launch_cooldown(self, t=0.4):
         """ Create cooldown between each projectile """
         def make_launch_safe():
