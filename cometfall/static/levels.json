@@ -10,16 +10,16 @@
   "level 2":
   {
     "background": "desert.jpg",
-    "monsters": ["Alien", "Squeletton"],
+    "monsters": ["Alien", "Mummy"],
     "probability": [0.4, 0.6],
-    "attack_bonus": "100%",
+    "attack_bonus": "10%",
     "spawn_number": 5,
     "player_bonus": "-10%",
     "game_sound": "protect-2x"
   },
   "level 3":
   {
-    "background": "espace.png",
+    "background": "foret.jpg",
     "monsters": ["Alien", "Mummy"],
     "probability": [0.6, 0.4],
     "attack_bonus": "20%",

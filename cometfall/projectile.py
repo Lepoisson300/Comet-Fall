@@ -18,9 +18,10 @@ class Projectile(pygame.sprite.Sprite):
     def remove(self):
         self.player.all_projectiles.remove(self)
 
-    def move(self):
+    def move(self, rotate=False):
         self.rect.x += self.velocity
-        #self.rotate()
+        if rotate:
+            self.rotate()
         # test si le projectile entre en collision avec un monstre
         for monster in self.player.game.check_colision(self, self.player.game.all_monster):
             self.remove()  # supprimer la boule de feu
@@ -31,10 +32,8 @@ class Projectile(pygame.sprite.Sprite):
             # supprimer le projectile (en dehors de l'ecran)
             self.remove()
 
-"""
     def rotate(self):
         # tourner le projectile
         self.angle += 12
         self.image = pygame.transform.rotozoom(self.origin_image, self.angle, 1)
         self.rect = self.image.get_rect(center=self.rect.center)
-"""

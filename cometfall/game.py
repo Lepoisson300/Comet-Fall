@@ -24,11 +24,14 @@ class Game:
         self.font = pygame.font.Font("cometfall/assets/fonts/Anton-Regular.ttf", 30)
         self.score = 0
         self.level = {}
-        self.pressed = {}
         self.username = None
         self.comet_event_number = 0
         image = pygame.image.load(f"cometfall/assets/background/planet.jpg")
         self.background = pygame.transform.scale(image, (1200, 720))
+
+    @property
+    def key_pressed(self):
+        return pygame.key.get_pressed()
 
     def start(self):
         self.is_playing = True
@@ -71,9 +74,11 @@ class Game:
         self.comet_event.reset_percent()
         self.is_playing = False
         self.score = 0
+        self.player.rect.x = 400
+        self.player.rect.y = 470
+        self.load_level(1)
         self.sound_manager.stop_all()
         self.sound_manager.play('game_over')
-        self.load_level(1)
 
     def update(self, screen):
         """ Update the screen display"""
@@ -83,7 +88,7 @@ class Game:
         screen.blit(username, (950, 20))
 
         # appliquer l'image du joueur
-        if self.pressed.get(pygame.K_SPACE):  # shoot mode
+        if self.key_pressed[pygame.K_LCTRL]:  # shoot mode
             screen.blit(self.player.shoot_image, self.player.rect)
         elif self.player.animation:
             self.player.animate()
@@ -112,11 +117,11 @@ class Game:
         self.all_monster.draw(screen)
 
         # verifier si le joueur souhaite aller à gauche ou à droite
-        if not self.pressed.get(pygame.K_SPACE):
-            if self.pressed.get(pygame.K_RIGHT) and \
+        if not self.key_pressed[pygame.K_LCTRL]:
+            if self.key_pressed[pygame.K_RIGHT] and \
                     self.player.rect.x + self.player.rect.width < screen.get_width():
                 self.player.move_right()
-            elif self.pressed.get(pygame.K_LEFT) and self.player.rect.x > 0:
+            elif self.key_pressed[pygame.K_LEFT] and self.player.rect.x > 0:
                 self.player.move_left()
 
     def load_level(self, wanted_level=None):

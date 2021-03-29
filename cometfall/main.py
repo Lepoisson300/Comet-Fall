@@ -1,7 +1,8 @@
 import sys
-import math
 
 import pygame
+from pygame.image import load
+from pygame.transform import scale
 
 from game import Game
 import interface
@@ -17,25 +18,19 @@ screen = pygame.display.set_mode((1080, 720))
 game = Game()  # charge le jeu
 
 # charge notre bannière
-banner = pygame.image.load('cometfall/assets/banner_1.png')
-banner = pygame.transform.scale(banner, (400, 400))
+banner = scale(load('cometfall/assets/banner_1.png'), (400, 400))
 banner_rect = banner.get_rect()
-banner_rect.x = math.ceil(screen.get_width() / 3.33)
-banner_rect.y = 110
+banner_rect.x, banner_rect.y = (320, 110)
 
 # charge le bouton pour lancer le jeu
-play_button = pygame.image.load('cometfall/assets/button_1.png')
-play_button = pygame.transform.scale(play_button, (370, 100))
+play_button = scale(load('cometfall/assets/button_1.png'), (370, 100))
 play_button_rect = play_button.get_rect()
-play_button_rect.x = 365
-play_button_rect.y = 415
+play_button_rect.x, play_button_rect.y = (360, 400)
 
 # charge le bouton pour quitter le jeu
-quit_button = pygame.image.load('cometfall/assets/quit_button.png')
-quit_button = pygame.transform.scale(quit_button, (200, 60))
+quit_button = pygame.transform.scale(load('cometfall/assets/quit_button.png'), (160, 60))
 quit_button_rect = quit_button.get_rect()
-quit_button_rect.x = 150
-quit_button_rect.y = 440
+quit_button_rect.x, quit_button_rect.y = 10, 650
 
 check_input = interface.ask_username_input()
 while not (username := check_input(screen)):
@@ -45,7 +40,6 @@ else:
     game.username = username
 
 while True:
-
     screen.blit(game.background, (0, 0))
     # verifier si le jeu a commencé
     if game.is_playing:
@@ -60,16 +54,8 @@ while True:
     for event in pygame.event.get():
         # détecte si un joueur lâche une touche du clavier
         if event.type == pygame.KEYDOWN:
-            game.pressed[event.key] = True
-
-            # détecte si la touche espace est pressée pour lancer le projectile
-            if event.key == pygame.KMOD_CTRL :
+            if event.key == pygame.K_SPACE and game.key_pressed[pygame.K_LCTRL]:
                 game.player.launch_projectile()
-            elif event.key == pygame.K_SPACE:
-                game.player.launch_projectile()
-
-        elif event.type == pygame.KEYUP:
-            game.pressed[event.key] = False
 
         elif event.type == pygame.MOUSEBUTTONDOWN:
             # vérification si la souris est en collision avec le bouton jouer
@@ -87,4 +73,3 @@ while True:
 
     pygame.display.flip()  # met à jour l'affichage
     clock.tick(FPS)  # fixer le nombre de FPS
-
