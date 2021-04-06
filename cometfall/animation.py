@@ -50,5 +50,6 @@ animation = {
     'player': load_animation_images('player', 8, slow_factor=3),
     'player_left': load_animation_images('player_left', 8, slow_factor=3),
     'alien': load_animation_images('alien', 24),
-    'squeletton': load_animation_images('squeletton', 6, slow_factor=3)
+    'squeletton': load_animation_images('squeletton', 6, slow_factor=5),
+    'dragon': load_animation_images('dragon', 10, slow_factor=3),
 }

@@ -5,12 +5,12 @@
     "monsters": ["Alien", "Mummy"],
     "probability": [0.2, 0.8],
     "spawn_number": 4,
-    "game_sound": "protect-2x"
+    "game_sound": "perillous_escape"
   },
   "level 2":
   {
     "background": "desert.jpg",
-    "monsters": ["Alien", "Mummy"],
+    "monsters": ["Dragon", "Squeletton"],
     "probability": [0.4, 0.6],
     "attack_bonus": "10%",
     "spawn_number": 5,

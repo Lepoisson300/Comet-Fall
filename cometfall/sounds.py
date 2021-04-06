@@ -9,7 +9,8 @@ class SoundManager:
             'game_over': pygame.mixer.Sound("cometfall/assets/sounds/game_over.ogg"),
             'meteorite': pygame.mixer.Sound("cometfall/assets/sounds/meteorite.ogg"),
             'tir': pygame.mixer.Sound("cometfall/assets/sounds/tir.mp3"),
-            'protect-2x': pygame.mixer.Sound("cometfall/assets/sounds/protect-2x.mp3")
+            'protect-2x': pygame.mixer.Sound("cometfall/assets/sounds/protect-2x.mp3"),
+            'perillous_escape': pygame.mixer.Sound("cometfall/assets/sounds/perilous-escape.mp3")
         }
 
     def play(self, name, volume=1):

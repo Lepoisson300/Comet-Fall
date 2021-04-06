@@ -7,10 +7,10 @@ class Comet(pygame.sprite.Sprite):
 
     def __init__(self, comet_event):
         super().__init__()
-        # definir l'image associé a cette comete
+        # définir l'image associé a cette comète
         self.image = pygame.image.load('cometfall/assets/comet.png')
         self.rect = self.image.get_rect()
-        self.velocity = random .randint(2, 4)
+        self.velocity = random .randint(3, 5)
         self.rect.x = random.randint(20, 800)
         self.rect.y = - random.randint(0, 800)
         self.comet_event = comet_event
@@ -39,20 +39,20 @@ class Comet(pygame.sprite.Sprite):
                 self, self.game.all_players):
             # retirer la boule feu
             self.remove()
-            # subir 20 de degat
+            # subir 20 de dégats
             self.game.player.damage(20)
 
 
 class CometFallEvent:
 
-    # lors du chargement -- creer un compteur
+    # lors du chargement -- créer un compteur
     def __init__(self, game):
         self.percent = 0
-        self.percent_speed = 0.02
+        self.percent_speed = 0.12
         self.game = game
         self.fall_mode = False
 
-        # definir un groupe de comete
+        # définir un groupe de comète
         self.all_comet = pygame.sprite.Group()
 
     def add_percent(self):
@@ -85,13 +85,13 @@ class CometFallEvent:
         pygame.draw.rect(surface, (0, 0, 0), [
             0,  # axe des x
             surface.get_height() - 20,  # axe des y
-            surface.get_width(),  # longueur de la fenetre
-            10  # epaisseur de la barre
+            surface.get_width(),  # longueur de la fenêtre
+            10  # épaisseur de la barre
         ])
-        # barre rouge (jauge d'evenement)
+        # barre rouge (jauge d'événement)
         pygame.draw.rect(surface, (187, 11, 11), [
             0,  # axe des x
             surface.get_height()-20,  # axe des y
-            (surface. get_width() / 100) * self.percent,  # longueur de la fenetre
-            10  # epaisseur de la barre
+            (surface. get_width() / 100) * self.percent,  # longueur de la fenêtre
+            10  # épaisseur de la barre
         ])

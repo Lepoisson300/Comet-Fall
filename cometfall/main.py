@@ -9,8 +9,12 @@ import interface
 
 pygame.init()
 
+BLUE = (40, 120, 230)
+GREEN = (40, 230, 120)
+center_x, center_y = 320, 240
 clock = pygame.time.Clock()
 FPS = 60
+command = False
 
 # génère la fenêtre du jeu
 pygame.display.set_caption("Comet Fall")
@@ -32,6 +36,11 @@ quit_button = pygame.transform.scale(load('cometfall/assets/quit_button.png'), (
 quit_button_rect = quit_button.get_rect()
 quit_button_rect.x, quit_button_rect.y = 10, 650
 
+# charge le bouton pour les commandes
+command_button = pygame.transform.scale(load('cometfall/assets/command_buton.png'), (160, 60))
+command_button_rect = command_button.get_rect()
+command_button_rect.x, command_button_rect.y = 910, 650
+
 check_input = interface.ask_username_input()
 while not (username := check_input(screen)):
     pygame.display.flip()  # met à jour l'affichage
@@ -48,6 +57,7 @@ while True:
     else:
         # ajoute l'écran de bienvenue
         screen.blit(quit_button, quit_button_rect)
+        screen.blit(command_button, command_button_rect)
         screen.blit(banner, banner_rect)
         screen.blit(play_button, play_button_rect)
 
@@ -66,6 +76,12 @@ while True:
             elif quit_button_rect.collidepoint(event.pos):
                 pygame.quit()
                 sys.exit(0)
+
+            elif command_button_rect.collidepoint(event.pos):
+                interface.commands(game, screen)
+                while True:
+                    pygame.display.flip()  # met à jour l'affichage
+                    clock.tick(FPS)
 
         elif event.type == pygame.QUIT:
             pygame.quit()
