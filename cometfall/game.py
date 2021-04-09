@@ -139,7 +139,7 @@ class Game:
                 self.background = pygame.transform.scale(image, (1080, 720))
                 if sound := self.level.get('game_sound'):
                     self.sound_manager.stop_all()
-                    self.sound_manager.play(sound, volume=0.2)
+                    self.sound_manager.play(sound, volume=0.15)
                 else:
                     raise AttributeError(f"You must define a game_sound attribute "
                                          f"for the level {level}")
