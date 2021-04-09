@@ -1,11 +1,9 @@
 import sys
 
 import pygame
-from pygame.image import load
-from pygame.transform import scale
 
 from game import Game
-import interface
+from interface import Interface
 
 pygame.init()
 
@@ -20,29 +18,10 @@ command = False
 pygame.display.set_caption("Comet Fall")
 screen = pygame.display.set_mode((1080, 720))
 game = Game()  # charge le jeu
+ui = Interface(screen)
 
-# charge notre bannière
-banner = scale(load('cometfall/assets/banner_1.png'), (400, 400))
-banner_rect = banner.get_rect()
-banner_rect.x, banner_rect.y = (320, 110)
-
-# charge le bouton pour lancer le jeu
-play_button = scale(load('cometfall/assets/button_1.png'), (370, 100))
-play_button_rect = play_button.get_rect()
-play_button_rect.x, play_button_rect.y = (360, 400)
-
-# charge le bouton pour quitter le jeu
-quit_button = pygame.transform.scale(load('cometfall/assets/quit_button.png'), (160, 60))
-quit_button_rect = quit_button.get_rect()
-quit_button_rect.x, quit_button_rect.y = 10, 650
-
-# charge le bouton pour les commandes
-command_button = pygame.transform.scale(load('cometfall/assets/command_buton.png'), (160, 60))
-command_button_rect = command_button.get_rect()
-command_button_rect.x, command_button_rect.y = 910, 650
-
-check_input = interface.ask_username_input()
-while not (username := check_input(screen)):
+check_input = ui.ask_username_input()
+while not (username := check_input()):
     pygame.display.flip()  # met à jour l'affichage
     clock.tick(FPS)
 else:
@@ -54,12 +33,10 @@ while True:
     if game.is_playing:
         # déclenche les instructions de la partie
         game.update(screen)
+    elif ui.commands_isshow:
+        ui.show_commands()
     else:
-        # ajoute l'écran de bienvenue
-        screen.blit(quit_button, quit_button_rect)
-        screen.blit(command_button, command_button_rect)
-        screen.blit(banner, banner_rect)
-        screen.blit(play_button, play_button_rect)
+        ui.main_menu()
 
     for event in pygame.event.get():
         # détecte si un joueur lâche une touche du clavier
@@ -67,21 +44,22 @@ while True:
             if event.key == pygame.K_SPACE and game.key_pressed[pygame.K_LCTRL]:
                 game.player.launch_projectile()
 
-        elif event.type == pygame.MOUSEBUTTONDOWN:
+        elif not game.is_playing and event.type == pygame.MOUSEBUTTONDOWN:
             # vérification si la souris est en collision avec le bouton jouer
-            if play_button_rect.collidepoint(event.pos):
+            if ui.play_button_rect.collidepoint(event.pos):
                 if not game.is_playing:
                     game.start()
 
-            elif quit_button_rect.collidepoint(event.pos):
+            elif not ui.commands_isshow and ui.quit_button_rect.collidepoint(event.pos):
                 pygame.quit()
                 sys.exit(0)
 
-            elif command_button_rect.collidepoint(event.pos):
-                interface.commands(game, screen)
-                while True:
-                    pygame.display.flip()  # met à jour l'affichage
-                    clock.tick(FPS)
+            elif not ui.commands_isshow and \
+                    ui.command_button_rect.collidepoint(event.pos):
+                ui.commands_isshow = True
+
+            elif ui.commands_isshow and ui.back_button_rect.collidepoint(event.pos):
+                ui.commands_isshow = False
 
         elif event.type == pygame.QUIT:
             pygame.quit()
