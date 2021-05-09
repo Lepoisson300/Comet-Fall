@@ -112,6 +112,11 @@ class Game:
         for comet in self.comet_event.all_comet:
             comet.fall()
 
+        # récuperer le boss de notre jeu
+        """
+        for Boss in self.Boss_event.ship:
+            Boss.fall()
+        """
         self.player.all_projectiles.draw(screen)
         self.comet_event.all_comet.draw(screen)
         self.all_monster.draw(screen)
