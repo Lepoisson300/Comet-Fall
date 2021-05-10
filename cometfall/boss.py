@@ -1,6 +1,6 @@
-import pygame
-import numpy as np
 import random
+
+import pygame
 
 
 class Boss(pygame.sprite.Sprite):
@@ -15,6 +15,7 @@ class Boss(pygame.sprite.Sprite):
         self.rect = self.image.get_rect()
         self.rect.x = 600
         self.rect.y = 320
+        self.move_x, self.move_y = 2, 2
         self.loot_amount = 10000
         self.game = game
         self.spawn_mode = False
@@ -38,13 +39,19 @@ class Boss(pygame.sprite.Sprite):
                          [self.rect.x + 10, self.rect.y - 20, self.health, 5])
 
     def move(self):
-        # générer des valeurs entre -2 et 2 avec une certaine probabilité
-        move_x, move_y = np.random.choice(np.arange(-5, 6), 2, p=[0.05, 0.05, 0.05, 0.05, 0.05, 0.5, 0.05, 0.05, 0.05, 0.05, 0.05])
-        if 0 <= self.rect.y + move_y <= 500:  # test pour savoir si il est en collision avec la limite
-            self.rect.y += move_y
-        if 0 <= self.rect.x + move_x <= 650:
-            self.rect.x += move_x
-
+        velocity = list(range(-2, 3))
+        # increase the number to increase the chance to keep the same direction
+        self.move_x = random.choice(velocity + [self.move_x] * 200)
+        self.move_y = random.choice(velocity + [self.move_y] * 200)
+        # si le vaisseau reste dans le cadre après son déplacement
+        if 0 <= self.rect.y + self.move_y <= 500:
+            self.rect.y += self.move_y
+        else:
+            self.move_y = -self.move_y
+        if 0 <= self.rect.x + self.move_x <= 650:
+            self.rect.x += self.move_x
+        else:
+            self.move_x = -self.move_x
         # verifier si la boule de feu touche le joueur
         if self.game.check_colision(
                 self, self.game.all_players):
@@ -81,12 +88,7 @@ class BossEvent:
 
     def reinit(self):
         self.game.load_level()
-        """
-        endroit pour theo 
-        """
-
-    def set_loot_amount(self, amount):
-        self.loot_amount = amount
+        # TODO: Théo
 
     def update_bar(self, surface):
         # ajouter du pourcentage a la barre
