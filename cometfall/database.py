@@ -2,14 +2,15 @@ import sqlite3
 
 from datetime import datetime
 
-class basedonnee :
+
+class BaseDonnee:
     """
     ###############################################
     #Classe permettant de gérer la base de données#
     ###############################################
     """
     def __init__(self):
-        self.connexion = sqlite3.connect('basedonnee.db')
+        self.connexion = sqlite3.connect('database.db')
         self.curseur = self.connexion.cursor()
 
     def enregistrer(self):
@@ -19,9 +20,9 @@ class basedonnee :
         #Fonction qui enregistre le score et le pseudo dans la base de données#
         #######################################################################
         """
-        try :
+        try:
 
-            id_joueur = 1<<
+            id_joueur = 1
             req = self.curseur.execute('INSERT INTO Joueur VALUES(?,?)', ((id_joueur, username, )) )
             req = self.curseur.execute('INSERT INTO Jeu VALUES(?,?,?)', ((id_joueur, self.score, str(datetime.now()),)))
             id_joueur = id_joueur+1
@@ -42,8 +43,7 @@ class basedonnee :
         #########################################################
         """
 
-        try :
-
+        try:
             username = input()
             self.score = input()
             req = self.curseur.execute('SELECT pseudo,score FROM Jeu join Joueur on Jeu.id_joueur = Joueur.id_joueur')

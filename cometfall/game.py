@@ -4,6 +4,7 @@ import pygame
 import numpy as np
 
 from comet import CometFallEvent
+from boss import BossEvent, Boss
 from player import Player
 import monster
 from sounds import SoundManager
@@ -18,14 +19,14 @@ class Game:
         self.is_playing = False
         self.player = Player(self)
         self.all_players = pygame.sprite.Group([self.player])
-        self.comet_event = CometFallEvent(self)
+        self.event = None
         self.all_monster = pygame.sprite.Group()
         self.sound_manager = SoundManager()
         self.font = pygame.font.Font("cometfall/assets/fonts/Anton-Regular.ttf", 30)
         self.score = 0
         self.level = {}
         self.username = None
-        self.comet_event_number = 0
+        self.event_number = 0
         image = pygame.image.load(f"cometfall/assets/background/planet.jpg")
         self.background = pygame.transform.scale(image, (1200, 720))
 
@@ -66,19 +67,19 @@ class Game:
         return pygame.sprite.spritecollide(sprite, group, False,
                                            pygame.sprite.collide_mask)
 
-    def game_over(self):
+    def game_over(self, sound_name='game_over'):
         """ Remet le jeu à neuf """
         self.all_monster = pygame.sprite.Group()
-        self.comet_event.all_comet = pygame.sprite.Group()
+        self.event.all_objects = pygame.sprite.Group()
         self.player.health = self.player.max_health
-        self.comet_event.reset_percent()
+        self.event.reset_percent()
         self.is_playing = False
         self.score = 0
         self.player.rect.x = 400
         self.player.rect.y = 470
         self.load_level(1)
         self.sound_manager.stop_all()
-        self.sound_manager.play('game_over')
+        self.sound_manager.play(sound_name)
 
     def update(self, screen):
         """ Update the screen display"""
@@ -96,7 +97,7 @@ class Game:
         else:
             screen.blit(self.player.default_image, self.player.rect)
         self.player.update_health_bar(screen)
-        self.comet_event.update_bar(screen)
+        self.event.update_bar(screen)
 
         # récupérer les projectiles du joueur
         for projectile in self.player.all_projectiles:
@@ -109,16 +110,11 @@ class Game:
             active_monster.update_animation()
 
         # récupérer les comètes de notre jeu
-        for comet in self.comet_event.all_comet:
-            comet.fall()
+        for obj in self.event.all_objects:
+            obj.move()
 
-        # récuperer le boss de notre jeu
-        """
-        for Boss in self.Boss_event.ship:
-            Boss.fall()
-        """
         self.player.all_projectiles.draw(screen)
-        self.comet_event.all_comet.draw(screen)
+        self.event.all_objects.draw(screen)
         self.all_monster.draw(screen)
 
         # verifier si le joueur souhaite aller à gauche ou à droite
@@ -133,8 +129,8 @@ class Game:
         """
         Apply values defined in levels.json for current level
         """
-        if self.comet_event_number % self.LEVEL_INCREMENT == 0:
-            level = wanted_level or (self.comet_event_number // self.LEVEL_INCREMENT + 1)
+        if self.event_number % self.LEVEL_INCREMENT == 0:
+            level = wanted_level or (self.event_number // self.LEVEL_INCREMENT + 1)
             if level <= self.MAX_LEVEL:
                 with open("cometfall/static/levels.json", 'r', encoding='utf-8') as f:
                     self.level = json.load(f)[f"level {level}"]
@@ -142,6 +138,11 @@ class Game:
                 image = pygame.image.load(
                     f"cometfall/assets/background/{self.level['background']}")
                 self.background = pygame.transform.scale(image, (1080, 720))
+                if mode := self.level.get('mode'):
+                    if mode == 'boss':
+                        self.event = BossEvent(self)
+                    elif mode == 'comet':
+                        self.event = CometFallEvent(self)
                 if sound := self.level.get('game_sound'):
                     self.sound_manager.stop_all()
                     self.sound_manager.play(sound, volume=0.15)
