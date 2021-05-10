@@ -27,7 +27,7 @@ class Comet(pygame.sprite.Sprite):
             self.comet_event.reset_percent()
             self.comet_event.spawn_mode = False
 
-    def fall(self):
+    def move(self):
         self.rect.y += self.velocity
 
         # ne tombe pas sur le sol
@@ -48,7 +48,7 @@ class CometFallEvent:
     # lors du chargement -- créer un compteur
     def __init__(self, game):
         self.percent = 0
-        self.percent_speed = 1.5
+        self.percent_speed = 0.1
         self.game = game
         self.spawn_mode = False
         # définir un groupe de comète

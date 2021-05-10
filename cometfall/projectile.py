@@ -1,5 +1,7 @@
 import pygame 
 
+from boss import BossEvent
+
 
 class Projectile(pygame.sprite.Sprite):
 
@@ -13,6 +15,7 @@ class Projectile(pygame.sprite.Sprite):
         self.rect.x = player.rect.x + 130
         self.rect.y = player.rect.y + 60
         self.origin_image = self.image
+        self.game = player.game
         self.angle = 0
 
     def remove(self):
@@ -23,9 +26,15 @@ class Projectile(pygame.sprite.Sprite):
         if rotate:
             self.rotate()
         # test si le projectile entre en collision avec un monstre
-        for monster in self.player.game.check_colision(self, self.player.game.all_monster):
-            self.remove()  # supprimer la boule de feu
+        for monster in self.player.game.check_colision(self, self.game.all_monster):
+            self.remove()  # supprimer le projectile
             monster.damage(self.player.attack)  # infliger des dégats
+
+        # infliger des dégats au boss
+        if isinstance(self.player.game.event, BossEvent):
+            for boss in self.player.game.check_colision(self, self.game.event.all_objects):
+                self.remove()  # supprimer le projectile
+                boss.damage(self.player.attack)  # infliger des dégats
 
         # verifier si notre n'est plus recent sur l'ecran
         if self.rect.x > 1080:

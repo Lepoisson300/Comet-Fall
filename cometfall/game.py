@@ -1,4 +1,5 @@
 import json
+from typing import Sequence, Union, NewType
 
 import pygame
 import numpy as np
@@ -8,6 +9,8 @@ from boss import BossEvent, Boss
 from player import Player
 import monster
 from sounds import SoundManager
+
+Sprite = NewType('Sprite', type(pygame.sprite))
 
 
 class Game:
@@ -20,7 +23,7 @@ class Game:
         self.player = Player(self)
         self.all_players = pygame.sprite.Group([self.player])
         self.event = None
-        self.all_monster = pygame.sprite.Group()
+        self.all_monster: Union[Sprite, Sequence[Sprite]] = pygame.sprite.Group()
         self.sound_manager = SoundManager()
         self.font = pygame.font.Font("cometfall/assets/fonts/Anton-Regular.ttf", 30)
         self.score = 0
@@ -112,6 +115,8 @@ class Game:
         # récupérer les comètes de notre jeu
         for obj in self.event.all_objects:
             obj.move()
+            if isinstance(obj, Boss):
+                obj.update_health_bar(screen)
 
         self.player.all_projectiles.draw(screen)
         self.event.all_objects.draw(screen)

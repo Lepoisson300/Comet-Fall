@@ -9,7 +9,7 @@ class Boss(pygame.sprite.Sprite):
         # définir l'image associé a ce boss
         self.image = pygame.image.load('cometfall/assets/Boss_ship.png')
         self.max_health = 1000
-        self.health = 1000
+        self.health = self.max_health
         self.attack = 20
         self.default_speed = 1
         self.rect = self.image.get_rect()
@@ -27,9 +27,9 @@ class Boss(pygame.sprite.Sprite):
         # vérifier si le monstre est mort
         if self.health <= 0:
             self.game.add_score(self.loot_amount)
-            self.spawn_mode = False
-            # si la barre d'evenement est chargé à son maximum
-            self.game.game_over()
+            # loads next level
+            self.game.load_level()
+            self.game.spawn_monsters()
 
     def update_health_bar(self, surface):
         """ dessiner notre barre de vie """
@@ -64,7 +64,7 @@ class BossEvent:
     # lors du chargement -- créer un compteur
     def __init__(self, game):
         self.percent = 0
-        self.percent_speed = 0.5
+        self.percent_speed = 0.1
         self.game = game
         self.spawn_mode = False
         # définir un groupe de comète
