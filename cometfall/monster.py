@@ -101,7 +101,25 @@ class Dragon(Monster):
 class Ship1(Monster):
 
     def __init__(self, game, health_factor=1, attack_factor=1):
-        super().__init__(game, "dragon", (155, 175), offset=50,
+        super().__init__(game, "ship1", (155, 175), offset=50,
                          max_health=300*health_factor, attack=5*attack_factor)
         self.default_speed = 1
         self.set_loot_amount(50)
+
+
+class Tree(Monster):
+
+    def __init__(self, game, health_factor=1, attack_factor=1):
+        super().__init__(game, "tree", (155, 155), offset=50,
+                         max_health=400 * health_factor, attack=5 * attack_factor)
+        self.default_speed = 0.5
+        self.set_loot_amount(200)
+
+
+class Rock(Monster):
+
+    def __init__(self, game, health_factor=1, attack_factor=1):
+        super().__init__(game, "rock", (100, 100), offset=50,
+                         max_health=200 * health_factor, attack=5 * attack_factor)
+        self.default_speed = 1
+        self.set_loot_amount(100)
