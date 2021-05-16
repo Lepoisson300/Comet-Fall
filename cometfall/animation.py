@@ -38,6 +38,7 @@ def load_animation_images(sprite_name, number_of_images, *, slow_factor=1):
 
     for num in range(1, number_of_images+1):
         image_path = path + f'{num}.png'
+        print(image_path)
         images.extend([pygame.image.load(image_path)] * slow_factor)
 
     return images

@@ -7,6 +7,8 @@ from comet import CometFallEvent
 from player import Player
 import monster
 from sounds import SoundManager
+from database import basedonnee
+
 
 
 class Game:
@@ -79,6 +81,12 @@ class Game:
         self.load_level(1)
         self.sound_manager.stop_all()
         self.sound_manager.play('game_over')
+        print()
+        a = basedonnee()
+        a.enregistrer()
+        a.score()
+
+
 
     def update(self, screen):
         """ Update the screen display"""

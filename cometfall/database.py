@@ -1,6 +1,7 @@
 import sqlite3
 
 from datetime import datetime
+from interface import Interface
 
 class basedonnee :
     """
@@ -21,8 +22,8 @@ class basedonnee :
         """
         try :
 
-            id_joueur = 1<<
-            req = self.curseur.execute('INSERT INTO Joueur VALUES(?,?)', ((id_joueur, username, )) )
+            id_joueur = 1
+            req = self.curseur.execute('INSERT INTO Joueur VALUES(?,?)', ((id_joueur, user_input, )) )
             req = self.curseur.execute('INSERT INTO Jeu VALUES(?,?,?)', ((id_joueur, self.score, str(datetime.now()),)))
             id_joueur = id_joueur+1
 
@@ -44,9 +45,7 @@ class basedonnee :
 
         try :
 
-            username = input()
-            self.score = input()
-            req = self.curseur.execute('SELECT pseudo,score FROM Jeu join Joueur on Jeu.id_joueur = Joueur.id_joueur')
+            req = self.curseur.execute('SELECT pseudo,score FROM Jeu join Joueur on Jeu.id_joueur = Joueur.id_joueur order by ASC')
             print(self.curseur.fetchone())
 
         except Exception as e:
