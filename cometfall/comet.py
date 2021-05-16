@@ -17,17 +17,17 @@ class Comet(pygame.sprite.Sprite):
         self.game = self.comet_event.game
 
     def remove(self):
-        self.comet_event.all_comet.remove(self)
+        self.comet_event.all_objects.remove(self)
         self.game.sound_manager.play('meteorite')
 
         # if all comets are fallen
-        if not bool(self.comet_event.all_comet):
-            self.comet_event.reinit_comet()
+        if not bool(self.comet_event.all_objects):
+            self.comet_event.reinit()
             # remettre la jauge de départ
             self.comet_event.reset_percent()
-            self.comet_event.fall_mode = False
+            self.comet_event.spawn_mode = False
 
-    def fall(self):
+    def move(self):
         self.rect.y += self.velocity
 
         # ne tombe pas sur le sol
@@ -48,12 +48,11 @@ class CometFallEvent:
     # lors du chargement -- créer un compteur
     def __init__(self, game):
         self.percent = 0
-        self.percent_speed = 0.05
+        self.percent_speed = 0.1
         self.game = game
-        self.fall_mode = False
-
+        self.spawn_mode = False
         # définir un groupe de comète
-        self.all_comet = pygame.sprite.Group()
+        self.all_objects = pygame.sprite.Group()
 
     def add_percent(self):
         self.percent += self.percent_speed
@@ -64,16 +63,16 @@ class CometFallEvent:
     def is_full_loaded(self):
         return self.percent >= 100
 
-    def meteor_fall(self, n=20):
+    def spawn(self, n=20):
         """ Generate n meteors"""
-        self.fall_mode = True
-        self.game.comet_event_number += 1
+        self.spawn_mode = True
+        self.game.event_number += 1
         self.percent = 0
         for _ in range(n):
             # apparaitre boule de feu
-            self.all_comet.add(Comet(self))
+            self.all_objects.add(Comet(self))
 
-    def reinit_comet(self):
+    def reinit(self):
         self.game.load_level()
         self.game.spawn_monsters()
 

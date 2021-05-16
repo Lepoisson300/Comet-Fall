@@ -32,10 +32,10 @@ class Monster(animation.AnimateSprite):
             self.game.add_score(self.loot_amount)
 
             # si la barre d'evenement est chargé à son maximum
-            if self.game.comet_event.is_full_loaded():
+            if self.game.event.is_full_loaded():
                 self.game.all_monster.remove(self)
                 if not bool(self.game.all_monster):
-                    self.game.comet_event.meteor_fall()
+                    self.game.event.spawn()
             else:
                 # respawn
                 self.rect.x = 1000 + random.randint(0, 300)
@@ -96,3 +96,30 @@ class Dragon(Monster):
                          max_health=300*health_factor, attack=5*attack_factor)
         self.default_speed = 2
         self.set_loot_amount(160)
+
+        
+class Ship1(Monster):
+
+    def __init__(self, game, health_factor=1, attack_factor=1):
+        super().__init__(game, "ship1", (155, 175), offset=50,
+                         max_health=300*health_factor, attack=5*attack_factor)
+        self.default_speed = 1
+        self.set_loot_amount(50)
+
+
+class Tree(Monster):
+
+    def __init__(self, game, health_factor=1, attack_factor=1):
+        super().__init__(game, "tree", (155, 155), offset=50,
+                         max_health=400 * health_factor, attack=5 * attack_factor)
+        self.default_speed = 0.5
+        self.set_loot_amount(200)
+
+
+class Rock(Monster):
+
+    def __init__(self, game, health_factor=1, attack_factor=1):
+        super().__init__(game, "rock", (100, 100), offset=50,
+                         max_health=200 * health_factor, attack=5 * attack_factor)
+        self.default_speed = 1
+        self.set_loot_amount(100)

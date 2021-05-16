@@ -53,4 +53,6 @@ animation = {
     'alien': load_animation_images('alien', 24),
     'squeletton': load_animation_images('squeletton', 6, slow_factor=5),
     'dragon': load_animation_images('dragon', 10, slow_factor=3),
+    'tree': load_animation_images('tree', 4, slow_factor=10),
+    'rock': load_animation_images('rock', 9, slow_factor=8),
 }
